@@ -1,30 +1,56 @@
 // Initialisation des données de démonstration
-import StorageService from './storageService'
+import FirebaseService from './firebaseService'
 import { generateMockData } from '../data/mockData'
+import { migrateLocalStorageToFirebase, checkLocalStorageData } from './migrateToFirebase'
 
-export const initializeData = () => {
-  // Vérifier si des données existent déjà
-  const existingUsers = StorageService.getUsers()
-  
-  if (existingUsers.length === 0) {
-    // Charger les données de démonstration
-    const mockData = generateMockData()
+export const initializeData = async () => {
+  try {
+    // Vérifier si des données existent déjà dans Firebase
+    const existingUsers = await FirebaseService.getUsers()
     
-    // Sauvegarder toutes les données
-    mockData.users.forEach(user => StorageService.saveUser(user))
-    mockData.offres.forEach(offre => StorageService.saveOffre(offre))
-    mockData.candidatures.forEach(candidature => StorageService.saveCandidature(candidature))
-    mockData.messages.forEach(message => StorageService.saveMessage(message))
-    mockData.notifications.forEach(notification => StorageService.saveNotification(notification))
-    mockData.demandesEntreprises.forEach(demande => StorageService.saveDemandeEntreprise(demande))
-    mockData.contrats.forEach(contrat => StorageService.saveContrat(contrat))
+    // Si Firebase est vide, vérifier s'il y a des données dans localStorage à migrer
+    if (existingUsers.length === 0) {
+      const localData = checkLocalStorageData()
+      
+      if (localData.hasData) {
+        console.log('📦 Des données ont été détectées dans localStorage, migration en cours...')
+        const migrationReport = await migrateLocalStorageToFirebase()
+        
+        if (migrationReport.success) {
+          console.log('✅ Migration réussie! Les données ont été transférées vers Firebase.')
+          return { migrated: true, report: migrationReport }
+        } else {
+          console.warn('⚠️  Migration partielle. Certaines erreurs sont survenues.')
+          return { migrated: true, report: migrationReport }
+        }
+      } else {
+        // Aucune donnée dans localStorage, initialiser les données de démonstration
+        console.log('📝 Aucune donnée à migrer, initialisation des données de démonstration...')
+        const mockData = generateMockData()
+        
+        // Sauvegarder toutes les données de manière asynchrone
+        await Promise.all([
+          ...mockData.users.map(user => FirebaseService.saveUser(user)),
+          ...mockData.offres.map(offre => FirebaseService.saveOffre(offre)),
+          ...mockData.candidatures.map(candidature => FirebaseService.saveCandidature(candidature)),
+          ...mockData.messages.map(message => FirebaseService.saveMessage(message)),
+          ...mockData.notifications.map(notification => FirebaseService.saveNotification(notification)),
+          ...mockData.demandesEntreprises.map(demande => FirebaseService.saveDemandeEntreprise(demande)),
+          ...mockData.contrats.map(contrat => FirebaseService.saveContrat(contrat))
+        ])
+        
+        console.log('✅ Données de démonstration initialisées dans Firebase')
+        return { migrated: false, initialized: true }
+      }
+    }
     
-    console.log('Données de démonstration initialisées')
-    return true
+    return { migrated: false, initialized: false }
+  } catch (error) {
+    console.error('❌ Erreur lors de l\'initialisation des données:', error)
+    return { migrated: false, initialized: false, error: error.message }
   }
-  
-  return false
 }
+
 
 
 

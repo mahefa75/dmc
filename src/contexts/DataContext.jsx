@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import StorageService from '../utils/storageService'
+import FirebaseService from '../utils/firebaseService'
 import { initializeData } from '../utils/initData'
+import { Timestamp } from 'firebase/firestore'
 
 const DataContext = createContext(null)
 
@@ -10,6 +11,28 @@ export const useData = () => {
     throw new Error('useData doit être utilisé dans un DataProvider')
   }
   return context
+}
+
+// Fonction utilitaire pour convertir les timestamps Firestore en dates JavaScript
+const convertTimestamps = (data) => {
+  if (!data) return data
+  if (Array.isArray(data)) {
+    return data.map(item => convertTimestamps(item))
+  }
+  if (typeof data === 'object') {
+    const converted = {}
+    for (const key in data) {
+      if (data[key] instanceof Timestamp) {
+        converted[key] = data[key].toDate().toISOString()
+      } else if (data[key] && typeof data[key] === 'object' && !Array.isArray(data[key])) {
+        converted[key] = convertTimestamps(data[key])
+      } else {
+        converted[key] = data[key]
+      }
+    }
+    return converted
+  }
+  return data
 }
 
 export const DataProvider = ({ children }) => {
@@ -22,134 +45,192 @@ export const DataProvider = ({ children }) => {
   const [contrats, setContrats] = useState([])
   const [loading, setLoading] = useState(true)
 
-  // Charger toutes les données au démarrage
+  // Configurer les listeners temps réel pour toutes les collections
   useEffect(() => {
-    // Initialiser les données de démonstration si nécessaire
-    initializeData()
-    loadAllData()
+    // Initialiser les données de démonstration si nécessaire (en arrière-plan)
+    initializeData().catch(error => {
+      console.error('Erreur lors de l\'initialisation des données:', error)
+    })
+
+    // Configurer les listeners temps réel
+    const unsubscribeUsers = FirebaseService.subscribeUsers((data) => {
+      setUsers(convertTimestamps(data))
+      setLoading(false)
+    })
+
+    const unsubscribeOffres = FirebaseService.subscribeOffres((data) => {
+      setOffres(convertTimestamps(data))
+    })
+
+    const unsubscribeCandidatures = FirebaseService.subscribeCandidatures((data) => {
+      setCandidatures(convertTimestamps(data))
+    })
+
+    const unsubscribeMessages = FirebaseService.subscribeMessages((data) => {
+      setMessages(convertTimestamps(data))
+    })
+
+    const unsubscribeNotifications = FirebaseService.subscribeNotifications((data) => {
+      setNotifications(convertTimestamps(data))
+    })
+
+    const unsubscribeDemandes = FirebaseService.subscribeDemandesEntreprises((data) => {
+      setDemandesEntreprises(convertTimestamps(data))
+    })
+
+    const unsubscribeContrats = FirebaseService.subscribeContrats((data) => {
+      setContrats(convertTimestamps(data))
+    })
+
+    // Nettoyer les listeners au démontage
+    return () => {
+      unsubscribeUsers()
+      unsubscribeOffres()
+      unsubscribeCandidatures()
+      unsubscribeMessages()
+      unsubscribeNotifications()
+      unsubscribeDemandes()
+      unsubscribeContrats()
+    }
   }, [])
 
-  const loadAllData = () => {
-    setUsers(StorageService.getUsers())
-    setOffres(StorageService.getOffres())
-    setCandidatures(StorageService.getCandidatures())
-    setMessages(StorageService.getMessages())
-    setNotifications(StorageService.getNotifications())
-    setDemandesEntreprises(StorageService.getDemandesEntreprises())
-    setContrats(StorageService.getContrats())
-    setLoading(false)
+  const loadAllData = async () => {
+    setLoading(true)
+    try {
+      const [usersData, offresData, candidaturesData, messagesData, notificationsData, demandesData, contratsData] = await Promise.all([
+        FirebaseService.getUsers(),
+        FirebaseService.getOffres(),
+        FirebaseService.getCandidatures(),
+        FirebaseService.getMessages(),
+        FirebaseService.getNotifications(),
+        FirebaseService.getDemandesEntreprises(),
+        FirebaseService.getContrats()
+      ])
+      
+      setUsers(convertTimestamps(usersData))
+      setOffres(convertTimestamps(offresData))
+      setCandidatures(convertTimestamps(candidaturesData))
+      setMessages(convertTimestamps(messagesData))
+      setNotifications(convertTimestamps(notificationsData))
+      setDemandesEntreprises(convertTimestamps(demandesData))
+      setContrats(convertTimestamps(contratsData))
+    } catch (error) {
+      console.error('Erreur lors du chargement des données:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   // ========== GESTION UTILISATEURS ==========
-  const addUser = (user) => {
-    StorageService.saveUser(user)
-    setUsers(StorageService.getUsers())
+  const addUser = async (user) => {
+    await FirebaseService.saveUser(user)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const updateUser = (id, updates) => {
-    StorageService.updateUser(id, updates)
-    setUsers(StorageService.getUsers())
+  const updateUser = async (id, updates) => {
+    await FirebaseService.updateUser(id, updates)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const deleteUser = (id) => {
-    StorageService.deleteUser(id)
-    setUsers(StorageService.getUsers())
+  const deleteUser = async (id) => {
+    await FirebaseService.deleteUser(id)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
   // ========== GESTION OFFRES ==========
-  const addOffre = (offre) => {
-    StorageService.saveOffre(offre)
-    setOffres(StorageService.getOffres())
+  const addOffre = async (offre) => {
+    await FirebaseService.saveOffre(offre)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const updateOffre = (id, updates) => {
-    StorageService.updateOffre(id, updates)
-    setOffres(StorageService.getOffres())
+  const updateOffre = async (id, updates) => {
+    await FirebaseService.updateOffre(id, updates)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const deleteOffre = (id) => {
-    StorageService.deleteOffre(id)
-    setOffres(StorageService.getOffres())
+  const deleteOffre = async (id) => {
+    await FirebaseService.deleteOffre(id)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
   // ========== GESTION CANDIDATURES ==========
-  const addCandidature = (candidature) => {
-    StorageService.saveCandidature(candidature)
-    setCandidatures(StorageService.getCandidatures())
+  const addCandidature = async (candidature) => {
+    await FirebaseService.saveCandidature(candidature)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const updateCandidature = (id, updates) => {
-    StorageService.updateCandidature(id, updates)
-    setCandidatures(StorageService.getCandidatures())
+  const updateCandidature = async (id, updates) => {
+    await FirebaseService.updateCandidature(id, updates)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const deleteCandidature = (id) => {
-    StorageService.deleteCandidature(id)
-    setCandidatures(StorageService.getCandidatures())
+  const deleteCandidature = async (id) => {
+    await FirebaseService.deleteCandidature(id)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
   // ========== GESTION MESSAGES ==========
-  const addMessage = (message) => {
-    StorageService.saveMessage(message)
-    setMessages(StorageService.getMessages())
+  const addMessage = async (message) => {
+    await FirebaseService.saveMessage(message)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const updateMessage = (id, updates) => {
-    StorageService.updateMessage(id, updates)
-    setMessages(StorageService.getMessages())
+  const updateMessage = async (id, updates) => {
+    await FirebaseService.updateMessage(id, updates)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const deleteMessage = (id) => {
-    StorageService.deleteMessage(id)
-    setMessages(StorageService.getMessages())
+  const deleteMessage = async (id) => {
+    await FirebaseService.deleteMessage(id)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
   // ========== GESTION NOTIFICATIONS ==========
-  const addNotification = (notification) => {
-    StorageService.saveNotification(notification)
-    setNotifications(StorageService.getNotifications())
+  const addNotification = async (notification) => {
+    await FirebaseService.saveNotification(notification)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const markNotificationAsRead = (id) => {
-    StorageService.markNotificationAsRead(id)
-    setNotifications(StorageService.getNotifications())
+  const markNotificationAsRead = async (id) => {
+    await FirebaseService.markNotificationAsRead(id)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const markAllNotificationsAsRead = (userId) => {
-    StorageService.markAllNotificationsAsRead(userId)
-    setNotifications(StorageService.getNotifications())
+  const markAllNotificationsAsRead = async (userId) => {
+    await FirebaseService.markAllNotificationsAsRead(userId)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const deleteNotification = (id) => {
-    StorageService.deleteNotification(id)
-    setNotifications(StorageService.getNotifications())
+  const deleteNotification = async (id) => {
+    await FirebaseService.deleteNotification(id)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
   // ========== GESTION DEMANDES ENTREPRISES ==========
-  const addDemandeEntreprise = (demande) => {
-    StorageService.saveDemandeEntreprise(demande)
-    setDemandesEntreprises(StorageService.getDemandesEntreprises())
+  const addDemandeEntreprise = async (demande) => {
+    await FirebaseService.saveDemandeEntreprise(demande)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const updateDemandeEntreprise = (id, updates) => {
-    StorageService.updateDemandeEntreprise(id, updates)
-    setDemandesEntreprises(StorageService.getDemandesEntreprises())
+  const updateDemandeEntreprise = async (id, updates) => {
+    await FirebaseService.updateDemandeEntreprise(id, updates)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const deleteDemandeEntreprise = (id) => {
-    StorageService.deleteDemandeEntreprise(id)
-    setDemandesEntreprises(StorageService.getDemandesEntreprises())
+  const deleteDemandeEntreprise = async (id) => {
+    await FirebaseService.deleteDemandeEntreprise(id)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
   // ========== GESTION CONTRATS ==========
-  const addContrat = (contrat) => {
-    StorageService.saveContrat(contrat)
-    setContrats(StorageService.getContrats())
+  const addContrat = async (contrat) => {
+    await FirebaseService.saveContrat(contrat)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
-  const updateContrat = (id, updates) => {
-    StorageService.updateContrat(id, updates)
-    setContrats(StorageService.getContrats())
+  const updateContrat = async (id, updates) => {
+    await FirebaseService.updateContrat(id, updates)
+    // Les listeners temps réel mettront à jour automatiquement
   }
 
   const value = {
