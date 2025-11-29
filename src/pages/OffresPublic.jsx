@@ -1,15 +1,17 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Header, Footer } from '../components/Layout'
-import { Card, Badge, Button, Input, Select, Pagination } from '../components/UI'
+import { Card, Badge, Button, Input, Select, Pagination, Highlight } from '../components/UI'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useData } from '../contexts/DataContext'
-import { Search, MapPin, Briefcase, DollarSign, Calendar, Building2, ArrowUpDown } from 'lucide-react'
+import { useDebounce } from '../hooks/useDebounce'
+import { Search, MapPin, Briefcase, DollarSign, Calendar, Building2, ArrowUpDown, X } from 'lucide-react'
 
 const OffresPublic = () => {
   const { t } = useLanguage()
   const { offres } = useData()
   const [searchTerm, setSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
   const [filters, setFilters] = useState({
     secteur: '',
     localisation: '',
@@ -20,6 +22,20 @@ const OffresPublic = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 20
 
+  const resetFilters = () => {
+    setSearchTerm('')
+    setFilters({
+      secteur: '',
+      localisation: '',
+      typeContrat: '',
+      salaireMin: ''
+    })
+    setSortBy('recent')
+    setCurrentPage(1)
+  }
+
+  const hasActiveFilters = searchTerm || filters.secteur || filters.localisation || filters.typeContrat || filters.salaireMin
+
   const secteurs = ['Construction', 'Hôtellerie', 'Agriculture', 'Manufacture', 'Logistique', 'Nettoyage', 'Sécurité']
   const localisations = ['Port-Louis', 'Curepipe', 'Quatre-Bornes', 'Flic-en-Flac', 'Grand-Baie']
   const typesContrat = ['CDI', 'CDD', 'Intérim', 'Saisonnier']
@@ -29,8 +45,8 @@ const OffresPublic = () => {
       if (offre.statut !== 'active') return false
 
       // Recherche textuelle
-      if (searchTerm) {
-        const search = searchTerm.toLowerCase()
+      if (debouncedSearchTerm) {
+        const search = debouncedSearchTerm.toLowerCase()
         if (
           !offre.titre.toLowerCase().includes(search) &&
           !offre.description?.toLowerCase().includes(search) &&
@@ -56,9 +72,9 @@ const OffresPublic = () => {
           return (b.salaire || 0) - (a.salaire || 0)
         case 'pertinence':
           // Tri par pertinence basé sur la recherche (simple)
-          if (searchTerm) {
-            const aMatch = a.titre.toLowerCase().includes(searchTerm.toLowerCase()) ? 1 : 0
-            const bMatch = b.titre.toLowerCase().includes(searchTerm.toLowerCase()) ? 1 : 0
+          if (debouncedSearchTerm) {
+            const aMatch = a.titre.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ? 1 : 0
+            const bMatch = b.titre.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ? 1 : 0
             return bMatch - aMatch
           }
           return new Date(b.datePublication) - new Date(a.datePublication)
@@ -69,7 +85,7 @@ const OffresPublic = () => {
     })
 
     return result
-  }, [offres, searchTerm, filters, sortBy])
+  }, [offres, debouncedSearchTerm, filters, sortBy])
 
   const paginatedOffres = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage
@@ -130,6 +146,18 @@ const OffresPublic = () => {
                 placeholder="0"
               />
             </div>
+            {hasActiveFilters && (
+              <div className="flex justify-end">
+                <Button
+                  onClick={resetFilters}
+                  variant="secondary"
+                  className="flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Réinitialiser les filtres
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Résultats et tri */}
@@ -178,7 +206,9 @@ const OffresPublic = () => {
                 return (
                   <Card key={offre.id} hover>
                     <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold flex-1">{offre.titre}</h3>
+                      <h3 className="text-xl font-semibold flex-1">
+                        <Highlight text={offre.titre} searchTerm={searchTerm} />
+                      </h3>
                       <div className="flex gap-2 ml-2">
                         {isNouveau && (
                           <Badge variant="success">Nouveau</Badge>

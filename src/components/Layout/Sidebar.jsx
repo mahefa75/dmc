@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../contexts/LanguageContext'
 import {
@@ -13,12 +14,20 @@ import {
   FileCheck,
   BarChart3,
   CreditCard,
-  Shield
+  Shield,
+  X,
+  Menu
 } from 'lucide-react'
 
 const Sidebar = ({ role }) => {
   const location = useLocation()
   const { t } = useLanguage()
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+
+  // Fermer la sidebar sur mobile lors du changement de route
+  useEffect(() => {
+    setIsMobileOpen(false)
+  }, [location.pathname])
 
   const candidatMenu = [
     { path: '/candidat/dashboard', icon: LayoutDashboard, label: t('nav.dashboard') },
@@ -55,35 +64,60 @@ const Sidebar = ({ role }) => {
   const menu = role === 'candidat' ? candidatMenu : role === 'entreprise' ? entrepriseMenu : adminMenu
 
   return (
-    <aside className="w-64 bg-gray-50 min-h-screen border-r border-gray-200">
-      <nav className="p-4">
-        <ul className="space-y-2">
-          {menu.map((item) => {
-            const Icon = item.icon
-            const isActive = location.pathname === item.path
+    <>
+      {/* Bouton menu burger sur mobile */}
+      <button
+        onClick={() => setIsMobileOpen(!isMobileOpen)}
+        className="lg:hidden fixed top-20 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200 hover:bg-gray-50"
+        aria-label="Toggle menu"
+      >
+        {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+      </button>
 
-            return (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`
-                    flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
-                    ${
-                      isActive
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-200'
-                    }
-                  `}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
-    </aside>
+      {/* Overlay sur mobile */}
+      {isMobileOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        w-64 bg-gray-50 min-h-screen border-r border-gray-200
+        fixed lg:static top-0 left-0 z-40
+        transform transition-transform duration-300 ease-in-out
+        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        <nav className="p-4 pt-20 lg:pt-4">
+          <ul className="space-y-2">
+            {menu.map((item) => {
+              const Icon = item.icon
+              const isActive = location.pathname === item.path
+
+              return (
+                <li key={item.path}>
+                  <Link
+                    to={item.path}
+                    className={`
+                      flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
+                      ${
+                        isActive
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-700 hover:bg-gray-200'
+                      }
+                    `}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="font-medium">{item.label}</span>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
+      </aside>
+    </>
   )
 }
 

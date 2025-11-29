@@ -4,12 +4,14 @@ import { Header, Sidebar } from '../../components/Layout'
 import { Card, Input, Select, Button, Badge, Pagination } from '../../components/UI'
 import { useData } from '../../contexts/DataContext'
 import { useLanguage } from '../../contexts/LanguageContext'
-import { Search } from 'lucide-react'
+import { useDebounce } from '../../hooks/useDebounce'
+import { Search, X } from 'lucide-react'
 
 const EntrepriseRechercheCV = () => {
   const { users } = useData()
   const { t } = useLanguage()
   const [searchTerm, setSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
   const [filters, setFilters] = useState({
     secteur: '',
     experience: '',
@@ -19,16 +21,29 @@ const EntrepriseRechercheCV = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 20
 
+  const resetFilters = () => {
+    setSearchTerm('')
+    setFilters({
+      secteur: '',
+      experience: '',
+      niveau: '',
+      langue: ''
+    })
+    setCurrentPage(1)
+  }
+
+  const hasActiveFilters = searchTerm || filters.secteur || filters.experience || filters.niveau || filters.langue
+
   const candidats = users.filter(u => u.role === 'candidat')
 
   const filteredCandidats = useMemo(() => {
     return candidats.filter(candidat => {
-      if (searchTerm && !candidat.prenom?.toLowerCase().includes(searchTerm.toLowerCase()) && 
-          !candidat.nom?.toLowerCase().includes(searchTerm.toLowerCase())) return false
+      if (debouncedSearchTerm && !candidat.prenom?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) &&
+          !candidat.nom?.toLowerCase().includes(debouncedSearchTerm.toLowerCase())) return false
       if (filters.secteur && candidat.secteurRecherche !== filters.secteur) return false
       return true
     })
-  }, [candidats, searchTerm, filters])
+  }, [candidats, debouncedSearchTerm, filters])
 
   const paginatedCandidats = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage
@@ -79,6 +94,18 @@ const EntrepriseRechercheCV = () => {
                 options={['', 'Français', 'Anglais']}
               />
             </div>
+            {hasActiveFilters && (
+              <div className="flex justify-end">
+                <Button
+                  onClick={resetFilters}
+                  variant="secondary"
+                  className="flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Réinitialiser les filtres
+                </Button>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">

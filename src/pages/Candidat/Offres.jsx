@@ -1,15 +1,17 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Header, Sidebar } from '../../components/Layout'
-import { Card, Badge, Button, Input, Select, Pagination } from '../../components/UI'
+import { Card, Badge, Button, Input, Select, Pagination, Highlight } from '../../components/UI'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { useData } from '../../contexts/DataContext'
-import { Search, MapPin, Briefcase, DollarSign, ArrowUpDown } from 'lucide-react'
+import { useDebounce } from '../../hooks/useDebounce'
+import { Search, MapPin, Briefcase, DollarSign, ArrowUpDown, X } from 'lucide-react'
 
 const CandidatOffres = () => {
   const { t } = useLanguage()
   const { offres } = useData()
   const [searchTerm, setSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
   const [filters, setFilters] = useState({
     secteur: '',
     localisation: '',
@@ -19,10 +21,23 @@ const CandidatOffres = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 20
 
+  const resetFilters = () => {
+    setSearchTerm('')
+    setFilters({
+      secteur: '',
+      localisation: '',
+      typeContrat: ''
+    })
+    setSortBy('recent')
+    setCurrentPage(1)
+  }
+
+  const hasActiveFilters = searchTerm || filters.secteur || filters.localisation || filters.typeContrat
+
   const filteredAndSortedOffres = useMemo(() => {
     let filtered = offres.filter(offre => {
       if (offre.statut !== 'active') return false
-      if (searchTerm && !offre.titre.toLowerCase().includes(searchTerm.toLowerCase())) return false
+      if (debouncedSearchTerm && !offre.titre.toLowerCase().includes(debouncedSearchTerm.toLowerCase())) return false
       if (filters.secteur && offre.secteur !== filters.secteur) return false
       if (filters.localisation && offre.localisation !== filters.localisation) return false
       if (filters.typeContrat && offre.typeContrat !== filters.typeContrat) return false
@@ -38,16 +53,16 @@ const CandidatOffres = () => {
         return (b.salaire || 0) - (a.salaire || 0)
       }
       // 'pertinence' basé sur la recherche
-      if (sortBy === 'pertinence' && searchTerm) {
-        const aMatch = a.titre.toLowerCase().includes(searchTerm.toLowerCase()) ? 1 : 0
-        const bMatch = b.titre.toLowerCase().includes(searchTerm.toLowerCase()) ? 1 : 0
+      if (sortBy === 'pertinence' && debouncedSearchTerm) {
+        const aMatch = a.titre.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ? 1 : 0
+        const bMatch = b.titre.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ? 1 : 0
         return bMatch - aMatch
       }
       return 0
     })
 
     return filtered
-  }, [offres, searchTerm, filters, sortBy])
+  }, [offres, debouncedSearchTerm, filters, sortBy])
 
   const paginatedOffres = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage
@@ -112,6 +127,18 @@ const CandidatOffres = () => {
                 options={['', 'CDI', 'CDD', 'Intérim', 'Saisonnier']}
               />
             </div>
+            {hasActiveFilters && (
+              <div className="flex justify-end">
+                <Button
+                  onClick={resetFilters}
+                  variant="secondary"
+                  className="flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Réinitialiser les filtres
+                </Button>
+              </div>
+            )}
           </div>
 
           {paginatedOffres.length === 0 ? (
@@ -124,7 +151,9 @@ const CandidatOffres = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {paginatedOffres.map(offre => (
                 <Card key={offre.id} hover>
-                  <h3 className="text-xl font-semibold mb-2">{offre.titre}</h3>
+                  <h3 className="text-xl font-semibold mb-2">
+                    <Highlight text={offre.titre} searchTerm={searchTerm} />
+                  </h3>
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center text-gray-600 text-sm">
                       <Briefcase className="w-4 h-4 mr-2" />

@@ -8,6 +8,7 @@ export { default as Toast, useToast } from './Toast'
 export { default as Table } from './Table'
 export { default as Pagination } from './Pagination'
 export { default as FileUpload } from './FileUpload'
+export { default as Highlight } from './Highlight'
 
 
 

@@ -23,22 +23,24 @@ const AdminOffreForm = () => {
   })
 
   useEffect(() => {
-    if (id && id !== 'nouvelle') {
+    if (id) {
       const offre = offres.find(o => o.id === id)
       if (offre) setFormData(offre)
     }
   }, [id, offres])
 
   const handleSubmit = () => {
-    if (id && id !== 'nouvelle') {
+    if (id) {
       updateOffre(id, formData)
-      showToast('Offre mise à jour', 'success')
+      showToast(t('admin.offresUpdated'), 'success')
     } else {
       addOffre({ ...formData, id: Date.now().toString(), datePublication: new Date().toISOString() })
-      showToast('Offre créée', 'success')
+      showToast(t('admin.offresCreated'), 'success')
     }
     navigate('/admin/offres')
   }
+
+  const isEditMode = !!id
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -46,7 +48,9 @@ const AdminOffreForm = () => {
       <div className="flex flex-1">
         <Sidebar role="admin" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">{id === 'nouvelle' ? 'Nouvelle offre' : 'Modifier offre'}</h1>
+          <h1 className="text-3xl font-bold mb-8">
+            {isEditMode ? t('admin.offresEditTitle') : t('admin.offresNewTitle')}
+          </h1>
 
           <Card>
             <div className="space-y-4">

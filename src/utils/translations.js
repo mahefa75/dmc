@@ -171,7 +171,11 @@ export const translations = {
       totalCandidats: 'Total candidats',
       totalEntreprises: 'Total entreprises',
       offresActives: 'Offres actives',
-      candidaturesMois: 'Candidatures ce mois'
+      candidaturesMois: 'Candidatures ce mois',
+      offresNewTitle: 'Nouvelle offre',
+      offresEditTitle: 'Modifier offre',
+      offresCreated: 'Offre créée avec succès',
+      offresUpdated: 'Offre mise à jour avec succès'
     },
     // Général
     common: {
@@ -363,7 +367,11 @@ export const translations = {
       totalCandidats: 'Total candidates',
       totalEntreprises: 'Total companies',
       offresActives: 'Active offers',
-      candidaturesMois: 'Applications this month'
+      candidaturesMois: 'Applications this month',
+      offresNewTitle: 'New job offer',
+      offresEditTitle: 'Edit job offer',
+      offresCreated: 'Job offer created successfully',
+      offresUpdated: 'Job offer updated successfully'
     },
     common: {
       save: 'Save',
@@ -554,7 +562,11 @@ export const translations = {
       totalCandidats: 'Kandidà totaly',
       totalEntreprises: 'Orinasa totaly',
       offresActives: 'Tolotra mavitrika',
-      candidaturesMois: 'Fangatahana amin\'ity volana ity'
+      candidaturesMois: 'Fangatahana amin\'ity volana ity',
+      offresNewTitle: 'Tolotra asa vaovao',
+      offresEditTitle: 'Hanova tolotra asa',
+      offresCreated: 'Tolotra asa noforonina soa aman-tsara',
+      offresUpdated: 'Tolotra asa nohavaozina soa aman-tsara'
     },
     common: {
       save: 'Tehirizina',
