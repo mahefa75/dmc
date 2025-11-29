@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom'
 import { Header, Sidebar } from '../../components/Layout'
-import { Card } from '../../components/UI'
+import { Card, Button } from '../../components/UI'
 import { useAuth } from '../../contexts/AuthContext'
 import { useData } from '../../contexts/DataContext'
 import { useLanguage } from '../../contexts/LanguageContext'
-import { Briefcase, FileText, CheckCircle, Clock } from 'lucide-react'
+import { Briefcase, FileText, CheckCircle, Clock, User, Search, MessageSquare, Edit } from 'lucide-react'
 
 const CandidatDashboard = () => {
   const { user } = useAuth()
@@ -68,6 +69,37 @@ const CandidatDashboard = () => {
             </Card>
           </div>
 
+          {/* Actions rapides */}
+          <Card className="mb-8">
+            <h2 className="text-xl font-semibold mb-4">Actions rapides</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Link to="/candidat/profil">
+                <Button variant="outline" className="w-full h-20 flex flex-col items-center justify-center gap-2">
+                  <Edit className="w-6 h-6" />
+                  <span>Compléter mon profil</span>
+                </Button>
+              </Link>
+              <Link to="/candidat/offres">
+                <Button variant="outline" className="w-full h-20 flex flex-col items-center justify-center gap-2">
+                  <Search className="w-6 h-6" />
+                  <span>Voir les offres</span>
+                </Button>
+              </Link>
+              <Link to="/candidat/candidatures">
+                <Button variant="outline" className="w-full h-20 flex flex-col items-center justify-center gap-2">
+                  <FileText className="w-6 h-6" />
+                  <span>Mes candidatures</span>
+                </Button>
+              </Link>
+              <Link to="/candidat/messagerie">
+                <Button variant="outline" className="w-full h-20 flex flex-col items-center justify-center gap-2">
+                  <MessageSquare className="w-6 h-6" />
+                  <span>Nouveau message</span>
+                </Button>
+              </Link>
+            </div>
+          </Card>
+
           {/* Offres récentes */}
           <Card>
             <h2 className="text-xl font-semibold mb-4">Offres récentes</h2>
@@ -91,6 +123,7 @@ const CandidatDashboard = () => {
 }
 
 export default CandidatDashboard
+
 
 
 

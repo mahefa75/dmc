@@ -267,20 +267,29 @@ const CandidatProfil = () => {
                   label={t('profil.cv')}
                   accept=".pdf,.doc,.docx"
                   onFileSelect={(file) => setFormData({ ...formData, cv: file })}
-                  value={formData.cv}
+                  value={formData.cv ? (typeof formData.cv === 'string' ? { name: 'CV.pdf', size: 0 } : formData.cv) : null}
                 />
+                {formData.cv && typeof formData.cv === 'string' && (
+                  <p className="text-sm text-gray-600">CV actuel : CV.pdf</p>
+                )}
                 <FileUpload
                   label={t('profil.lettreMotivation')}
                   accept=".pdf,.doc,.docx"
                   onFileSelect={(file) => setFormData({ ...formData, lettreMotivation: file })}
-                  value={formData.lettreMotivation}
+                  value={formData.lettreMotivation ? (typeof formData.lettreMotivation === 'string' ? { name: 'Lettre_motivation.pdf', size: 0 } : formData.lettreMotivation) : null}
                 />
+                {formData.lettreMotivation && typeof formData.lettreMotivation === 'string' && (
+                  <p className="text-sm text-gray-600">Lettre de motivation actuelle : Lettre_motivation.pdf</p>
+                )}
                 <FileUpload
                   label={t('profil.cvVideo')}
                   accept="video/*"
                   onFileSelect={(file) => setFormData({ ...formData, cvVideo: file })}
-                  value={formData.cvVideo}
+                  value={formData.cvVideo ? (typeof formData.cvVideo === 'string' ? { name: 'CV_video.mp4', size: 0 } : formData.cvVideo) : null}
                 />
+                {formData.cvVideo && typeof formData.cvVideo === 'string' && (
+                  <p className="text-sm text-gray-600">CV vidéo actuel : CV_video.mp4</p>
+                )}
               </div>
             )}
 
@@ -511,6 +520,7 @@ const CandidatProfil = () => {
 }
 
 export default CandidatProfil
+
 
 
 
