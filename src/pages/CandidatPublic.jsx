@@ -16,19 +16,19 @@ const CandidatPublic = () => {
     .slice(0, 6)
 
   const avantages = [
-    'Inscription gratuite',
-    'Accès à toutes les offres vérifiées',
-    'Accompagnement personnalisé',
-    'Support administratif complet',
-    'Suivi de vos candidatures',
-    'Notifications en temps réel'
+    t('candidat.freeRegistration'),
+    t('candidat.accessVerifiedOffers'),
+    t('candidat.personalizedSupport'),
+    t('candidat.fullAdminSupport'),
+    t('candidat.applicationTracking'),
+    t('candidat.realTimeNotifications')
   ]
 
   const etapes = [
-    { num: 1, titre: 'Inscrivez-vous gratuitement', desc: 'Créez votre compte en quelques minutes' },
-    { num: 2, titre: 'Complétez votre profil', desc: 'Ajoutez vos expériences, diplômes et compétences' },
-    { num: 3, titre: 'Postulez aux offres', desc: 'Trouvez des offres qui correspondent à votre profil' },
-    { num: 4, titre: 'Décrochez votre emploi', desc: 'Suivez vos candidatures et obtenez des réponses rapides' }
+    { num: 1, titre: t('candidat.step1Title'), desc: t('candidat.step1Desc') },
+    { num: 2, titre: t('candidat.step2Title'), desc: t('candidat.step2Desc') },
+    { num: 3, titre: t('candidat.step3Title'), desc: t('candidat.step3Desc') },
+    { num: 4, titre: t('candidat.step4Title'), desc: t('candidat.step4Desc') }
   ]
 
   return (
@@ -38,13 +38,15 @@ const CandidatPublic = () => {
         {/* Hero */}
         <section className="bg-gradient-to-r from-navy-800 to-navy-900 py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">Trouvez votre <span className="text-gold-500">emploi</span> à Maurice</h1>
+            <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">
+              {t('candidat.findJobTitle')} <span className="text-gold-500">{t('candidat.jobInMauritius')}</span> {t('candidat.atMauritius')}
+            </h1>
             <p className="text-xl mb-8 text-gray-400">
-              Rejoignez des centaines de candidats qui ont trouvé leur emploi grâce à notre plateforme
+              {t('candidat.publicSubtitle')}
             </p>
             <Link to="/register">
               <Button variant="gold" size="lg">
-                S'inscrire gratuitement
+                {t('candidat.registerFree')}
               </Button>
             </Link>
           </div>
@@ -53,7 +55,9 @@ const CandidatPublic = () => {
         {/* Avantages */}
         <section className="py-16 bg-navy-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Pourquoi nous <span className="text-gold-500">choisir</span> ?</h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">
+              {t('candidat.whyChooseUs')} <span className="text-gold-500">{t('candidat.choose')}</span> ?
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {avantages.map((avantage, index) => (
                 <Card key={index} hover>
@@ -70,7 +74,9 @@ const CandidatPublic = () => {
         {/* Comment ça marche */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Comment ça <span className="text-gold-500">marche</span> ?</h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">
+              {t('candidat.howItWorks')} <span className="text-gold-500">{t('candidat.works')}</span> ?
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {etapes.map((etape) => (
                 <Card key={etape.num} className="text-center">
@@ -89,10 +95,12 @@ const CandidatPublic = () => {
         <section className="py-16 bg-navy-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-display font-bold text-gray-100">Offres <span className="text-gold-500">récentes</span></h2>
+              <h2 className="text-3xl font-display font-bold text-gray-100">
+                {t('candidat.recentOffersTitle')} <span className="text-gold-500">{t('candidat.recent')}</span>
+              </h2>
               <Link to="/offres">
                 <Button variant="outline" className="flex items-center gap-2">
-                  Voir toutes les offres
+                  {t('candidat.seeAllOffers')}
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -100,7 +108,7 @@ const CandidatPublic = () => {
             {offresRecentes.length === 0 ? (
               <Card>
                 <p className="text-center text-gray-400 py-8">
-                  Aucune offre disponible pour le moment. Revenez bientôt !
+                  {t('candidat.noOfferAvailable')}
                 </p>
               </Card>
             ) : (
@@ -131,7 +139,7 @@ const CandidatPublic = () => {
                     )}
                     <Link to={`/offres/${offre.id}`}>
                       <Button variant="gold" className="w-full">
-                        Voir les détails
+                        {t('candidat.viewDetails')}
                       </Button>
                     </Link>
                   </Card>
@@ -144,19 +152,21 @@ const CandidatPublic = () => {
         {/* CTA */}
         <section className="py-16 bg-gradient-to-r from-navy-800 via-navy-900 to-navy-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-display font-bold mb-4 text-gray-100">Prêt à <span className="text-gold-500">commencer</span> ?</h2>
+            <h2 className="text-3xl font-display font-bold mb-4 text-gray-100">
+              {t('candidat.readyTo')} <span className="text-gold-500">{t('candidat.start')}</span> ?
+            </h2>
             <p className="text-xl mb-8 text-gray-400">
-              Inscrivez-vous maintenant et accédez à toutes les offres d'emploi
+              {t('candidat.registerNowSubtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/register">
                 <Button variant="gold" size="lg">
-                  S'inscrire maintenant
+                  {t('candidat.registerNow')}
                 </Button>
               </Link>
               <Link to="/login">
                 <Button variant="outline" size="lg">
-                  Déjà inscrit ? Connectez-vous
+                  {t('candidat.alreadyRegistered')}
                 </Button>
               </Link>
             </div>
@@ -169,6 +179,3 @@ const CandidatPublic = () => {
 }
 
 export default CandidatPublic
-
-
-

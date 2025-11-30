@@ -83,14 +83,14 @@ const ForgotPassword = () => {
                 </p>
                 <Link to="/login">
                   <Button variant="gold" className="w-full">
-                    Retour à la connexion
+                    {t('auth.backToLogin')}
                   </Button>
                 </Link>
               </div>
             ) : (
               <>
                 <p className="text-gray-400 mb-8 text-center">
-                  Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+                  {t('auth.resetPasswordDesc')}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -116,7 +116,7 @@ const ForgotPassword = () => {
 
                 <div className="mt-8 text-center">
                   <Link to="/login" className="text-sm text-gold-500 hover:text-gold-400 transition-colors">
-                    Retour à la connexion
+                    {t('auth.backToLogin')}
                   </Link>
                 </div>
               </>

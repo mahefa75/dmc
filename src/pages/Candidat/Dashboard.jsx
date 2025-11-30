@@ -34,7 +34,7 @@ const CandidatDashboard = () => {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">Candidatures</p>
+                  <p className="text-gray-400 text-sm">{t('candidat.applications')}</p>
                   <p className="text-2xl font-bold text-gray-100">{mesCandidatures.length}</p>
                 </div>
                 <FileText className="w-12 h-12 text-gold-500" />
@@ -43,7 +43,7 @@ const CandidatDashboard = () => {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">En attente</p>
+                  <p className="text-gray-400 text-sm">{t('candidat.pending')}</p>
                   <p className="text-2xl font-bold text-gray-100">{enAttente}</p>
                 </div>
                 <Clock className="w-12 h-12 text-amber-500" />
@@ -52,7 +52,7 @@ const CandidatDashboard = () => {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">Présélectionné</p>
+                  <p className="text-gray-400 text-sm">{t('candidat.preselected')}</p>
                   <p className="text-2xl font-bold text-gray-100">{selectionne}</p>
                 </div>
                 <CheckCircle className="w-12 h-12 text-emerald-500" />
@@ -61,7 +61,7 @@ const CandidatDashboard = () => {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm">Entretiens</p>
+                  <p className="text-gray-400 text-sm">{t('candidat.interviews')}</p>
                   <p className="text-2xl font-bold text-gray-100">{entretien}</p>
                 </div>
                 <Briefcase className="w-12 h-12 text-gold-500" />
@@ -71,30 +71,30 @@ const CandidatDashboard = () => {
 
           {/* Actions rapides */}
           <Card className="mb-8">
-            <h2 className="text-xl font-semibold mb-4 text-gray-100">Actions rapides</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-100">{t('candidat.quickActions')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <Link to="/candidat/profil">
                 <Button variant="secondary" className="w-full h-20 flex flex-col items-center justify-center gap-2">
                   <Edit className="w-6 h-6 text-gold-500" />
-                  <span>Compléter mon profil</span>
+                  <span>{t('candidat.completeProfile')}</span>
                 </Button>
               </Link>
               <Link to="/candidat/offres">
                 <Button variant="secondary" className="w-full h-20 flex flex-col items-center justify-center gap-2">
                   <Search className="w-6 h-6 text-gold-500" />
-                  <span>Voir les offres</span>
+                  <span>{t('candidat.viewOffers')}</span>
                 </Button>
               </Link>
               <Link to="/candidat/candidatures">
                 <Button variant="secondary" className="w-full h-20 flex flex-col items-center justify-center gap-2">
                   <FileText className="w-6 h-6 text-gold-500" />
-                  <span>Mes candidatures</span>
+                  <span>{t('candidat.myApplications')}</span>
                 </Button>
               </Link>
               <Link to="/candidat/messagerie">
                 <Button variant="secondary" className="w-full h-20 flex flex-col items-center justify-center gap-2">
                   <MessageSquare className="w-6 h-6 text-gold-500" />
-                  <span>Nouveau message</span>
+                  <span>{t('candidat.newMessage')}</span>
                 </Button>
               </Link>
             </div>
@@ -102,9 +102,9 @@ const CandidatDashboard = () => {
 
           {/* Offres récentes */}
           <Card>
-            <h2 className="text-xl font-semibold mb-4 text-gray-100">Offres récentes</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-100">{t('candidat.recentOffers')}</h2>
             {offresRecentes.length === 0 ? (
-              <p className="text-gray-400">Aucune offre récente</p>
+              <p className="text-gray-400">{t('candidat.noRecentOffers')}</p>
             ) : (
               <div className="space-y-4">
                 {offresRecentes.map(offre => (

@@ -42,11 +42,11 @@ const CandidatMesCandidatures = () => {
       entretien: { variant: 'info', label: t('candidatures.entretien') },
       accepte: { variant: 'success', label: t('candidatures.accepte') },
       refuse: { variant: 'danger', label: t('candidatures.refuse') },
-      pending: { variant: 'warning', label: 'En attente' },
-      preselected: { variant: 'info', label: 'Présélectionné' },
-      'interview scheduled': { variant: 'info', label: 'Entretien planifié' },
-      selected: { variant: 'success', label: 'Sélectionné' },
-      rejected: { variant: 'danger', label: 'Refusé' }
+      pending: { variant: 'warning', label: t('candidatures.enAttente') },
+      preselected: { variant: 'info', label: t('candidatures.selectionne') },
+      'interview scheduled': { variant: 'info', label: t('candidatures.entretien') },
+      selected: { variant: 'success', label: t('candidatures.accepte') },
+      rejected: { variant: 'danger', label: t('candidatures.refuse') }
     }
     return badges[statut] || badges[statut?.toLowerCase()] || { variant: 'default', label: statut }
   }
@@ -59,18 +59,18 @@ const CandidatMesCandidatures = () => {
   const confirmRemove = () => {
     if (candidatureToRemove && deleteCandidature) {
       deleteCandidature(candidatureToRemove.id)
-      showToast('Candidature retirée avec succès', 'success')
+      showToast(t('candidat.applicationRemoved'), 'success')
       setShowRemoveModal(false)
       setCandidatureToRemove(null)
     }
   }
 
   const columns = [
-    { header: 'Poste', accessor: 'offre', render: (offre) => offre?.titre || 'N/A' },
-    { header: 'Entreprise', accessor: 'offre', render: (offre) => offre?.entrepriseNom || 'N/A' },
-    { header: 'Date', accessor: 'dateCandidature', render: (date) => new Date(date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'numeric', year: 'numeric' }) },
+    { header: t('candidatures.poste'), accessor: 'offre', render: (offre) => offre?.titre || 'N/A' },
+    { header: t('candidatures.entreprise'), accessor: 'offre', render: (offre) => offre?.entrepriseNom || 'N/A' },
+    { header: t('candidatures.date'), accessor: 'dateCandidature', render: (date) => new Date(date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'numeric', year: 'numeric' }) },
     {
-      header: 'Statut',
+      header: t('candidatures.statut'),
       accessor: 'statut',
       render: (statut) => {
         const badge = getStatutBadge(statut)
@@ -85,12 +85,12 @@ const CandidatMesCandidatures = () => {
           <Link to={`/offres/${row.offre?.id}`}>
             <Button variant="outline" size="sm">
               <Eye className="w-4 h-4 mr-1" />
-              Voir détails
+              {t('candidatures.voirDetails')}
             </Button>
           </Link>
           <Button variant="danger" size="sm" onClick={() => handleRemove(row)}>
             <X className="w-4 h-4 mr-1" />
-            Retirer
+            {t('candidat.remove')}
           </Button>
         </div>
       )
@@ -112,7 +112,7 @@ const CandidatMesCandidatures = () => {
                 setCurrentPage(1)
               }}
               options={[
-                { value: '', label: 'Tous les statuts' },
+                { value: '', label: t('candidat.allStatuses') },
                 { value: 'en_attente', label: t('candidatures.enAttente') },
                 { value: 'selectionne', label: t('candidatures.selectionne') },
                 { value: 'entretien', label: t('candidatures.entretien') },
@@ -125,7 +125,7 @@ const CandidatMesCandidatures = () => {
 
           <Card>
             {mesCandidatures.length === 0 ? (
-              <p className="text-center text-gray-400 py-8">Aucune candidature</p>
+              <p className="text-center text-gray-400 py-8">{t('candidat.noApplication')}</p>
             ) : (
               <>
                 <Table columns={columns} data={paginatedCandidatures} />
@@ -153,26 +153,26 @@ const CandidatMesCandidatures = () => {
           setShowRemoveModal(false)
           setCandidatureToRemove(null)
         }}
-        title="Retirer la candidature"
+        title={t('candidat.removeApplication')}
         footer={
           <>
             <Button variant="secondary" onClick={() => {
               setShowRemoveModal(false)
               setCandidatureToRemove(null)
             }}>
-              Annuler
+              {t('common.cancel')}
             </Button>
             <Button variant="danger" onClick={confirmRemove}>
-              Retirer
+              {t('candidat.remove')}
             </Button>
           </>
         }
       >
         <p className="mb-4 text-gray-300">
-          Êtes-vous sûr de vouloir retirer votre candidature pour le poste <strong className="text-gold-500">{candidatureToRemove?.offre?.titre}</strong> chez <strong className="text-gold-500">{candidatureToRemove?.offre?.entrepriseNom}</strong> ?
+          {t('candidat.confirmRemoveApplication')} <strong className="text-gold-500">{candidatureToRemove?.offre?.titre}</strong> {t('candidat.at')} <strong className="text-gold-500">{candidatureToRemove?.offre?.entrepriseNom}</strong> ?
         </p>
         <p className="text-sm text-gray-400">
-          Cette action est irréversible.
+          {t('candidat.actionIrreversible')}
         </p>
       </Modal>
     </div>

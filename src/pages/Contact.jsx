@@ -26,7 +26,7 @@ const Contact = () => {
     
     setTimeout(() => {
       setLoading(false)
-      showToast('Message envoyé avec succès !', 'success')
+      showToast(t('contact.messageSent'), 'success')
       setFormData({
         nom: '',
         prenom: '',
@@ -54,27 +54,27 @@ const Contact = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">{t('nav.contact')}</h1>
             <p className="text-gray-400">
-              Contactez-nous pour toute question ou demande d'information
+              {t('contact.subtitle')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Informations de contact */}
             <Card>
-              <h2 className="text-2xl font-semibold mb-6 text-gold-500">Informations de contact</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-gold-500">{t('contact.contactInfo')}</h2>
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-semibold mb-2 text-gray-100">Adresse</h3>
+                  <h3 className="font-semibold mb-2 text-gray-100">{t('contact.address')}</h3>
                   <p className="text-gray-400">
                     Antananarivo, Madagascar
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2 text-gray-100">Email</h3>
+                  <h3 className="font-semibold mb-2 text-gray-100">{t('auth.email')}</h3>
                   <p className="text-gray-400">contact@recrutement-mg-mu.com</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2 text-gray-100">Téléphone</h3>
+                  <h3 className="font-semibold mb-2 text-gray-100">{t('auth.phone')}</h3>
                   <p className="text-gray-400">+261 34 00 000 00</p>
                 </div>
               </div>
@@ -82,7 +82,7 @@ const Contact = () => {
 
             {/* Formulaire */}
             <Card>
-              <h2 className="text-2xl font-semibold mb-6 text-gold-500">Envoyer un message</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-gold-500">{t('contact.sendMessage')}</h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Input
@@ -119,7 +119,7 @@ const Contact = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
-                    Objet
+                    {t('contact.subject')}
                   </label>
                   <select
                     name="objet"
@@ -128,16 +128,16 @@ const Contact = () => {
                     className="w-full px-4 py-2 bg-navy-800 border border-navy-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
                     required
                   >
-                    <option value="" className="bg-navy-800">Sélectionner un objet</option>
-                    <option value="candidat" className="bg-navy-800">Question candidat</option>
-                    <option value="entreprise" className="bg-navy-800">Question entreprise</option>
-                    <option value="autre" className="bg-navy-800">Autre</option>
+                    <option value="" className="bg-navy-800">{t('contact.selectSubject')}</option>
+                    <option value="candidat" className="bg-navy-800">{t('contact.candidateQuestion')}</option>
+                    <option value="entreprise" className="bg-navy-800">{t('contact.companyQuestion')}</option>
+                    <option value="autre" className="bg-navy-800">{t('contact.other')}</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
-                    Message
+                    {t('contact.message')}
                   </label>
                   <textarea
                     name="message"
@@ -150,7 +150,7 @@ const Contact = () => {
                 </div>
 
                 <FileUpload
-                  label="Document (optionnel)"
+                  label={t('contact.documentOptional')}
                   accept=".pdf,.doc,.docx"
                   onFileSelect={setFile}
                   value={file}
@@ -164,7 +164,7 @@ const Contact = () => {
                     className="mr-2"
                   />
                   <label htmlFor="rgpd" className="text-sm text-gray-400">
-                    J'accepte que mes données soient traitées
+                    {t('contact.dataConsent')}
                   </label>
                 </div>
 

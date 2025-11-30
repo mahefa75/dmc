@@ -18,13 +18,13 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-sm text-gray-400">
-              Votre plateforme de confiance pour le recrutement entre Madagascar et Maurice.
+              {t('footer.description')}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-gray-100">Navigation</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-100">{t('footer.navigation')}</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <Link to="/" className="hover:text-gold-500 transition-colors">
@@ -46,7 +46,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-gray-100">Services</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-100">{t('footer.services')}</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <Link to="/candidat" className="hover:text-gold-500 transition-colors">
@@ -63,21 +63,21 @@ const Footer = () => {
 
           {/* Support */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-gray-100">Support</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-100">{t('footer.support')}</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <a href="#" className="hover:text-gold-500 transition-colors">
-                  FAQ
+                  {t('footer.faq')}
                 </a>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-gold-500 transition-colors">
-                  Contact
+                  {t('nav.contact')}
                 </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-gold-500 transition-colors">
-                  Politique de confidentialité
+                  {t('footer.privacyPolicy')}
                 </a>
               </li>
             </ul>
@@ -85,7 +85,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 pt-8 border-t border-navy-700 text-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Plateforme de Recrutement Madagascar-Maurice. Tous droits réservés.</p>
+          <p>&copy; {new Date().getFullYear()} {t('footer.copyright')}</p>
         </div>
       </div>
     </footer>

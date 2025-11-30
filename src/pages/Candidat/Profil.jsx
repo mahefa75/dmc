@@ -59,7 +59,7 @@ const CandidatProfil = () => {
 
   const handleSave = () => {
     updateUser(formData)
-    showToast('Profil mis à jour avec succès', 'success')
+    showToast(t('profil.updateSuccess'), 'success')
   }
 
   const addExperience = () => {
@@ -218,22 +218,27 @@ const CandidatProfil = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <Input
-                    label="Date de naissance"
+                    label={t('profil.birthDate')}
                     type="date"
                     value={formData.dateNaissance}
                     onChange={(e) => setFormData({ ...formData, dateNaissance: e.target.value })}
                   />
                   <Select
-                    label="Sexe"
+                    label={t('profil.gender')}
                     value={formData.sexe}
                     onChange={(e) => setFormData({ ...formData, sexe: e.target.value })}
-                    options={['', 'M', 'F', 'Autre']}
+                    options={[
+                      { value: '', label: '' },
+                      { value: 'M', label: t('profil.male') },
+                      { value: 'F', label: t('profil.female') },
+                      { value: 'Autre', label: t('profil.other') }
+                    ]}
                   />
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
                   <Input
-                    label="Ville"
+                    label={t('profil.city')}
                     value={formData.adresse.ville}
                     onChange={(e) => setFormData({
                       ...formData,
@@ -241,7 +246,7 @@ const CandidatProfil = () => {
                     })}
                   />
                   <Input
-                    label="Région"
+                    label={t('profil.region')}
                     value={formData.adresse.region}
                     onChange={(e) => setFormData({
                       ...formData,
@@ -249,7 +254,7 @@ const CandidatProfil = () => {
                     })}
                   />
                   <Input
-                    label="Pays"
+                    label={t('profil.country')}
                     value={formData.adresse.pays}
                     onChange={(e) => setFormData({
                       ...formData,
@@ -270,7 +275,7 @@ const CandidatProfil = () => {
                   value={formData.cv ? (typeof formData.cv === 'string' ? { name: 'CV.pdf', size: 0 } : formData.cv) : null}
                 />
                 {formData.cv && typeof formData.cv === 'string' && (
-                  <p className="text-sm text-gray-600">CV actuel : CV.pdf</p>
+                  <p className="text-sm text-gray-600">{t('profil.currentCV')} : CV.pdf</p>
                 )}
                 <FileUpload
                   label={t('profil.lettreMotivation')}
@@ -279,7 +284,7 @@ const CandidatProfil = () => {
                   value={formData.lettreMotivation ? (typeof formData.lettreMotivation === 'string' ? { name: 'Lettre_motivation.pdf', size: 0 } : formData.lettreMotivation) : null}
                 />
                 {formData.lettreMotivation && typeof formData.lettreMotivation === 'string' && (
-                  <p className="text-sm text-gray-600">Lettre de motivation actuelle : Lettre_motivation.pdf</p>
+                  <p className="text-sm text-gray-600">{t('profil.currentCoverLetter')} : Lettre_motivation.pdf</p>
                 )}
                 <FileUpload
                   label={t('profil.cvVideo')}
@@ -288,7 +293,7 @@ const CandidatProfil = () => {
                   value={formData.cvVideo ? (typeof formData.cvVideo === 'string' ? { name: 'CV_video.mp4', size: 0 } : formData.cvVideo) : null}
                 />
                 {formData.cvVideo && typeof formData.cvVideo === 'string' && (
-                  <p className="text-sm text-gray-600">CV vidéo actuel : CV_video.mp4</p>
+                  <p className="text-sm text-gray-600">{t('profil.currentVideoCV')} : CV_video.mp4</p>
                 )}
               </div>
             )}
@@ -299,7 +304,7 @@ const CandidatProfil = () => {
                 {formData.experiences.map((exp, index) => (
                   <Card key={index} className="p-4">
                     <div className="flex justify-between mb-4">
-                      <h3 className="font-semibold text-gray-100">Expérience {index + 1}</h3>
+                      <h3 className="font-semibold text-gray-100">{t('profil.experience')} {index + 1}</h3>
                       <button
                         onClick={() => removeExperience(index)}
                         className="text-red-600 hover:text-red-800"
@@ -309,30 +314,30 @@ const CandidatProfil = () => {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <Input
-                        label="Poste"
+                        label={t('profil.position')}
                         value={exp.poste}
                         onChange={(e) => updateExperience(index, 'poste', e.target.value)}
                       />
                       <Input
-                        label="Entreprise"
+                        label={t('profil.company')}
                         value={exp.entreprise}
                         onChange={(e) => updateExperience(index, 'entreprise', e.target.value)}
                       />
                       <Input
-                        label="Date début"
+                        label={t('profil.startDate')}
                         type="date"
                         value={exp.dateDebut}
                         onChange={(e) => updateExperience(index, 'dateDebut', e.target.value)}
                       />
                       <Input
-                        label="Date fin"
+                        label={t('profil.endDate')}
                         type="date"
                         value={exp.dateFin}
                         onChange={(e) => updateExperience(index, 'dateFin', e.target.value)}
                       />
                       <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-300 mb-1">
-                          Description
+                          {t('profil.description')}
                         </label>
                         <textarea
                           value={exp.description}
@@ -346,7 +351,7 @@ const CandidatProfil = () => {
                 ))}
                 <Button onClick={addExperience} variant="outline">
                   <Plus className="w-4 h-4 mr-2 inline" />
-                  Ajouter une expérience
+                  {t('profil.addExperience')}
                 </Button>
               </div>
             )}
@@ -357,7 +362,7 @@ const CandidatProfil = () => {
                 {formData.diplomes.map((diplome, index) => (
                   <Card key={index} className="p-4">
                     <div className="flex justify-between mb-4">
-                      <h3 className="font-semibold text-gray-100">Diplôme {index + 1}</h3>
+                      <h3 className="font-semibold text-gray-100">{t('profil.diploma')} {index + 1}</h3>
                       <button
                         onClick={() => removeDiplome(index)}
                         className="text-red-600 hover:text-red-800"
@@ -367,23 +372,23 @@ const CandidatProfil = () => {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <Input
-                        label="Intitulé"
+                        label={t('profil.diplomaName')}
                         value={diplome.intitule}
                         onChange={(e) => updateDiplome(index, 'intitule', e.target.value)}
                       />
                       <Input
-                        label="Établissement"
+                        label={t('profil.institution')}
                         value={diplome.etablissement}
                         onChange={(e) => updateDiplome(index, 'etablissement', e.target.value)}
                       />
                       <Input
-                        label="Année"
+                        label={t('profil.year')}
                         type="number"
                         value={diplome.annee}
                         onChange={(e) => updateDiplome(index, 'annee', e.target.value)}
                       />
                       <Select
-                        label="Niveau"
+                        label={t('profil.level')}
                         value={diplome.niveau}
                         onChange={(e) => updateDiplome(index, 'niveau', e.target.value)}
                         options={['', 'CAP', 'BEP', 'BAC', 'BAC+2', 'BAC+3', 'Master']}
@@ -393,7 +398,7 @@ const CandidatProfil = () => {
                 ))}
                 <Button onClick={addDiplome} variant="outline">
                   <Plus className="w-4 h-4 mr-2 inline" />
-                  Ajouter un diplôme
+                  {t('profil.addDiploma')}
                 </Button>
               </div>
             )}
@@ -403,19 +408,26 @@ const CandidatProfil = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Langues parlées
+                    {t('profil.spokenLanguages')}
                   </label>
                   {formData.langues.map((langue, index) => (
                     <div key={index} className="flex gap-2 mb-2">
                       <Input
-                        placeholder="Langue"
+                        placeholder={t('profil.language')}
                         value={langue.langue}
                         onChange={(e) => updateLangue(index, 'langue', e.target.value)}
                       />
                       <Select
                         value={langue.niveau}
                         onChange={(e) => updateLangue(index, 'niveau', e.target.value)}
-                        options={['', 'Débutant', 'Intermédiaire', 'Avancé', 'Courant', 'Natif']}
+                        options={[
+                          { value: '', label: '' },
+                          { value: 'Débutant', label: t('profil.beginner') },
+                          { value: 'Intermédiaire', label: t('profil.intermediate') },
+                          { value: 'Avancé', label: t('profil.advanced') },
+                          { value: 'Courant', label: t('profil.fluent') },
+                          { value: 'Natif', label: t('profil.native') }
+                        ]}
                       />
                       <button
                         onClick={() => removeLangue(index)}
@@ -427,13 +439,13 @@ const CandidatProfil = () => {
                   ))}
                   <Button onClick={addLangue} variant="outline" size="sm">
                     <Plus className="w-4 h-4 mr-2 inline" />
-                    Ajouter une langue
+                    {t('profil.addLanguage')}
                   </Button>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Permis de conduire
+                    {t('profil.drivingLicense')}
                   </label>
                   <div className="flex gap-2">
                     {['A', 'B', 'C', 'D'].map(permis => (
@@ -468,14 +480,20 @@ const CandidatProfil = () => {
             {activeTab === 'disponibilite' && (
               <div className="space-y-4">
                 <Select
-                  label="Disponibilité"
+                  label={t('profil.disponibilite')}
                   value={formData.disponibilite}
                   onChange={(e) => setFormData({ ...formData, disponibilite: e.target.value })}
-                  options={['', 'Immédiate', 'Sous 1 mois', 'Sous 3 mois', 'À discuter']}
+                  options={[
+                    { value: '', label: '' },
+                    { value: 'Immédiate', label: t('profil.immediate') },
+                    { value: 'Sous 1 mois', label: t('profil.within1Month') },
+                    { value: 'Sous 3 mois', label: t('profil.within3Months') },
+                    { value: 'À discuter', label: t('profil.toDiscuss') }
+                  ]}
                 />
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Type de contrat recherché
+                    {t('profil.contractTypeSearched')}
                   </label>
                   <div className="flex gap-4">
                     {['CDI', 'CDD', 'Intérim', 'Saisonnier'].map(type => (
@@ -520,10 +538,3 @@ const CandidatProfil = () => {
 }
 
 export default CandidatProfil
-
-
-
-
-
-
-

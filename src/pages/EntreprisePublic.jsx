@@ -30,10 +30,10 @@ const EntreprisePublic = () => {
   const secteurs = ['Construction', 'Hôtellerie', 'Agriculture', 'Manufacture', 'Logistique', 'Nettoyage', 'Sécurité', 'Autre']
 
   const avantages = [
-    { icon: Users, titre: 'Base de CV qualifiés', desc: 'Accédez à des centaines de profils vérifiés' },
-    { icon: Shield, titre: 'Présélection rigoureuse', desc: 'Nous vérifions chaque candidat pour vous' },
-    { icon: HeadphonesIcon, titre: 'Support administratif', desc: 'Accompagnement complet du processus' },
-    { icon: CheckCircle, titre: 'Suivi post-recrutement', desc: 'Nous restons à vos côtés après l\'embauche' }
+    { icon: Users, titre: t('entreprise.qualifiedCVDatabase'), desc: t('entreprise.qualifiedCVDesc') },
+    { icon: Shield, titre: t('entreprise.rigorousPreselection'), desc: t('entreprise.rigorousPreselectionDesc') },
+    { icon: HeadphonesIcon, titre: t('entreprise.adminSupport'), desc: t('entreprise.adminSupportDesc') },
+    { icon: CheckCircle, titre: t('entreprise.postRecruitmentFollow'), desc: t('entreprise.postRecruitmentFollowDesc') }
   ]
 
   const handleSubmit = async (e) => {
@@ -49,7 +49,7 @@ const EntreprisePublic = () => {
     }
 
     addDemandeEntreprise(demande)
-    showToast('Demande envoyée ! Vous recevrez une réponse sous 48h', 'success')
+    showToast(t('entreprise.requestSentSuccess'), 'success')
     setFormData({
       nomEntreprise: '',
       secteur: '',
@@ -78,16 +78,18 @@ const EntreprisePublic = () => {
         {/* Hero */}
         <section className="bg-gradient-to-r from-navy-800 to-navy-900 py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">Recrutez les <span className="text-gold-500">meilleurs talents</span> malgaches</h1>
+            <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">
+              {t('entreprise.recruitBestTalents')} <span className="text-gold-500">{t('entreprise.bestTalents')}</span> {t('entreprise.malagasyWorkers')}
+            </h1>
             <p className="text-xl mb-8 text-gray-400">
-              Une plateforme dédiée au recrutement de travailleurs qualifiés pour votre entreprise à Maurice
+              {t('entreprise.publicSubtitle')}
             </p>
             <Button
               variant="gold"
               size="lg"
               onClick={() => setShowForm(true)}
             >
-              Demander un accès
+              {t('entreprise.requestAccess')}
             </Button>
           </div>
         </section>
@@ -95,7 +97,9 @@ const EntreprisePublic = () => {
         {/* Avantages */}
         <section className="py-16 bg-navy-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Nos <span className="text-gold-500">avantages</span></h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">
+              {t('entreprise.ourAdvantages')} <span className="text-gold-500">{t('entreprise.advantages')}</span>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {avantages.map((avantage, index) => {
                 const Icon = avantage.icon
@@ -114,32 +118,34 @@ const EntreprisePublic = () => {
         {/* Nos formules */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Nos <span className="text-gold-500">formules</span></h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">
+              {t('entreprise.ourPlans')} <span className="text-gold-500">{t('entreprise.plans')}</span>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Formule Basique */}
               <Card className="relative">
                 <div className="text-center mb-6">
-                  <Zap className="w-12 h-12 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold mb-2">Basique</h3>
-                  <div className="text-3xl font-bold text-green-600 mb-1">15 000 MUR</div>
-                  <p className="text-gray-500 text-sm">par mois</p>
+                  <Zap className="w-12 h-12 text-gold-500 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold mb-2 text-gray-100">{t('entreprise.basicPlan')}</h3>
+                  <div className="text-3xl font-bold text-gold-500 mb-1">15 000 MUR</div>
+                  <p className="text-gray-400 text-sm">{t('entreprise.perMonth')}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">50 CV consultables/mois</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">50 {t('entreprise.cvPerMonth')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Recherche de profils</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.profileSearch')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Support standard</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.standardSupport')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Demandes de recrutement</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.recruitmentRequests')}</span>
                   </li>
                 </ul>
                 <Button
@@ -147,84 +153,84 @@ const EntreprisePublic = () => {
                   className="w-full"
                   onClick={() => setShowForm(true)}
                 >
-                  Choisir cette formule
+                  {t('entreprise.choosePlan')}
                 </Button>
               </Card>
 
               {/* Formule Standard */}
-              <Card className="relative border-2 border-green-600 transform scale-105">
-                <div className="absolute top-0 right-0 bg-green-600 text-white px-3 py-1 rounded-bl-lg text-sm font-semibold">
-                  Populaire
+              <Card className="relative border-2 border-gold-500 transform scale-105">
+                <div className="absolute top-0 right-0 bg-gold-500 text-navy-900 px-3 py-1 rounded-bl-lg text-sm font-semibold">
+                  {t('entreprise.popular')}
                 </div>
                 <div className="text-center mb-6">
-                  <Star className="w-12 h-12 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold mb-2">Standard</h3>
-                  <div className="text-3xl font-bold text-green-600 mb-1">30 000 MUR</div>
-                  <p className="text-gray-500 text-sm">par mois</p>
+                  <Star className="w-12 h-12 text-gold-500 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold mb-2 text-gray-100">{t('entreprise.standardPlan')}</h3>
+                  <div className="text-3xl font-bold text-gold-500 mb-1">30 000 MUR</div>
+                  <p className="text-gray-400 text-sm">{t('entreprise.perMonth')}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">150 CV consultables/mois</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">150 {t('entreprise.cvPerMonth')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Recherche avancée</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.advancedSearch')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Messagerie illimitée</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.unlimitedMessaging')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Support prioritaire</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.prioritySupport')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Suivi personnalisé</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.personalizedFollowUp')}</span>
                   </li>
                 </ul>
                 <Button
-                  variant="primary"
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  variant="gold"
+                  className="w-full"
                   onClick={() => setShowForm(true)}
                 >
-                  Choisir cette formule
+                  {t('entreprise.choosePlan')}
                 </Button>
               </Card>
 
               {/* Formule Premium */}
               <Card className="relative">
                 <div className="text-center mb-6">
-                  <Crown className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold mb-2">Premium</h3>
-                  <div className="text-3xl font-bold text-green-600 mb-1">50 000 MUR</div>
-                  <p className="text-gray-500 text-sm">par mois</p>
+                  <Crown className="w-12 h-12 text-gold-500 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold mb-2 text-gray-100">{t('entreprise.premiumPlan')}</h3>
+                  <div className="text-3xl font-bold text-gold-500 mb-1">50 000 MUR</div>
+                  <p className="text-gray-400 text-sm">{t('entreprise.perMonth')}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Accès illimité aux CV</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.unlimitedCVAccess')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Toutes les fonctionnalités</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.allFeatures')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Support prioritaire 24/7</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.support247')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Gestionnaire de compte dédié</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.dedicatedManager')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Formations et webinaires</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.trainingsWebinars')}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">Statistiques avancées</span>
+                    <CheckCircle className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">{t('entreprise.advancedStats')}</span>
                   </li>
                 </ul>
                 <Button
@@ -232,7 +238,7 @@ const EntreprisePublic = () => {
                   className="w-full"
                   onClick={() => setShowForm(true)}
                 >
-                  Choisir cette formule
+                  {t('entreprise.choosePlan')}
                 </Button>
               </Card>
             </div>
@@ -242,15 +248,17 @@ const EntreprisePublic = () => {
         {/* Processus */}
         <section className="py-16 bg-navy-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Notre <span className="text-gold-500">processus</span> de recrutement</h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">
+              {t('entreprise.ourProcess')} <span className="text-gold-500">{t('entreprise.process')}</span> {t('entreprise.recruitmentProcess')}
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
-                'Demande d\'accès',
-                'Validation sous 48h',
-                'Définition des besoins',
-                'Proposition de profils',
-                'Entretiens',
-                'Finalisation'
+                t('entreprise.accessRequest'),
+                t('entreprise.validation48h'),
+                t('entreprise.needsDefinition'),
+                t('entreprise.profileProposal'),
+                t('entreprise.interviews'),
+                t('entreprise.finalization')
               ].map((etape, index) => (
                 <Card key={index} className="text-center">
                   <div className="w-10 h-10 bg-gold-500 text-navy-900 rounded-full flex items-center justify-center font-bold mx-auto mb-2">
@@ -268,10 +276,10 @@ const EntreprisePublic = () => {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Demande d'accès entreprise</h2>
+                <h2 className="text-2xl font-bold text-gray-100">{t('entreprise.companyAccessRequest')}</h2>
                 <button
                   onClick={() => setShowForm(false)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-gray-500 hover:text-gray-300"
                 >
                   ✕
                 </button>
@@ -279,7 +287,7 @@ const EntreprisePublic = () => {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <Input
-                  label="Nom de l'entreprise"
+                  label={t('entreprise.companyName')}
                   name="nomEntreprise"
                   value={formData.nomEntreprise}
                   onChange={handleChange}
@@ -287,7 +295,7 @@ const EntreprisePublic = () => {
                 />
 
                 <Select
-                  label="Secteur d'activité"
+                  label={t('entreprise.activitySector')}
                   name="secteur"
                   value={formData.secteur}
                   onChange={handleChange}
@@ -296,7 +304,7 @@ const EntreprisePublic = () => {
                 />
 
                 <Input
-                  label="Adresse complète à Maurice"
+                  label={t('entreprise.fullAddressMauritius')}
                   name="adresse"
                   value={formData.adresse}
                   onChange={handleChange}
@@ -305,14 +313,14 @@ const EntreprisePublic = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <Input
-                    label="Prénom du contact"
+                    label={t('entreprise.contactFirstName')}
                     name="prenomContact"
                     value={formData.prenomContact}
                     onChange={handleChange}
                     required
                   />
                   <Input
-                    label="Nom du contact"
+                    label={t('entreprise.contactLastName')}
                     name="nomContact"
                     value={formData.nomContact}
                     onChange={handleChange}
@@ -321,7 +329,7 @@ const EntreprisePublic = () => {
                 </div>
 
                 <Input
-                  label="Fonction du contact"
+                  label={t('entreprise.contactFunction')}
                   name="fonctionContact"
                   value={formData.fonctionContact}
                   onChange={handleChange}
@@ -329,7 +337,7 @@ const EntreprisePublic = () => {
                 />
 
                 <Input
-                  label="Email professionnel"
+                  label={t('entreprise.professionalEmail')}
                   type="email"
                   name="email"
                   value={formData.email}
@@ -338,7 +346,7 @@ const EntreprisePublic = () => {
                 />
 
                 <Input
-                  label="Téléphone"
+                  label={t('auth.phone')}
                   name="telephone"
                   value={formData.telephone}
                   onChange={handleChange}
@@ -346,7 +354,7 @@ const EntreprisePublic = () => {
                 />
 
                 <Input
-                  label="Nombre d'employés"
+                  label={t('entreprise.numberOfEmployees')}
                   type="number"
                   name="nombreEmployes"
                   value={formData.nombreEmployes}
@@ -354,45 +362,45 @@ const EntreprisePublic = () => {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Besoins en recrutement
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    {t('entreprise.recruitmentNeeds')}
                   </label>
                   <textarea
                     name="besoins"
                     value={formData.besoins}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full px-4 py-2 bg-navy-800 border border-navy-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500/50"
                     required
                   />
                 </div>
 
                 <FileUpload
-                  label="KBIS ou document d'enregistrement"
+                  label={t('entreprise.kbisDocument')}
                   accept=".pdf,.jpg,.png"
                   onFileSelect={setFile}
                   value={file}
                 />
 
-                <p className="text-sm text-gray-600">
-                  Votre demande sera examinée sous 48h. Vous recevrez un email de confirmation avec vos identifiants de connexion.
+                <p className="text-sm text-gray-400">
+                  {t('entreprise.requestExaminedInfo')}
                 </p>
 
                 <div className="flex gap-4">
                   <Button
                     type="submit"
-                    variant="primary"
+                    variant="gold"
                     className="flex-1"
                     disabled={loading}
                   >
-                    {loading ? 'Envoi...' : 'Envoyer la demande'}
+                    {loading ? t('entreprise.sending') : t('entreprise.sendRequest')}
                   </Button>
                   <Button
                     type="button"
                     variant="secondary"
                     onClick={() => setShowForm(false)}
                   >
-                    Annuler
+                    {t('common.cancel')}
                   </Button>
                 </div>
               </form>
@@ -407,6 +415,3 @@ const EntreprisePublic = () => {
 }
 
 export default EntreprisePublic
-
-
-

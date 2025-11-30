@@ -25,15 +25,15 @@ const Login = () => {
     const result = await login(email, password)
     
     if (result.success) {
-      showToast(t('common.success') + ' - Connexion réussie', 'success')
+      showToast(t('auth.loginSuccess'), 'success')
       const dashboardPath = 
         result.user.role === 'candidat' ? '/candidat/dashboard' :
         result.user.role === 'entreprise' ? '/entreprise/dashboard' :
         '/admin/dashboard'
       navigate(dashboardPath)
     } else {
-      setError(result.error || 'Erreur de connexion')
-      showToast(result.error || 'Erreur de connexion', 'error')
+      setError(result.error || t('auth.loginError'))
+      showToast(result.error || t('auth.loginError'), 'error')
     }
     
     setLoading(false)
@@ -58,7 +58,7 @@ const Login = () => {
               {t('auth.login')}
             </h1>
             <p className="text-gray-400 text-center mb-8">
-              Accédez à votre espace personnel
+              {t('auth.accessPersonalSpace')}
             </p>
             
             <form onSubmit={handleSubmit} className="space-y-5">

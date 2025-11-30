@@ -167,7 +167,7 @@ const Register = () => {
               {t('auth.register')}
             </h1>
             <p className="text-gray-400 text-center mb-8">
-              Rejoignez notre communauté de professionnels
+              {t('auth.joinCommunity')}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">

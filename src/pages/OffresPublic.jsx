@@ -109,7 +109,7 @@ const OffresPublic = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
-                placeholder="Rechercher une offre..."
+                placeholder={t('offres.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value)
@@ -121,25 +121,25 @@ const OffresPublic = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <Select
-                label="Secteur"
+                label={t('offres.secteur')}
                 value={filters.secteur}
                 onChange={(e) => handleFilterChange('secteur', e.target.value)}
                 options={['', ...secteurs]}
               />
               <Select
-                label="Localisation"
+                label={t('offres.localisation')}
                 value={filters.localisation}
                 onChange={(e) => handleFilterChange('localisation', e.target.value)}
                 options={['', ...localisations]}
               />
               <Select
-                label="Type de contrat"
+                label={t('offres.contrat')}
                 value={filters.typeContrat}
                 onChange={(e) => handleFilterChange('typeContrat', e.target.value)}
                 options={['', ...typesContrat]}
               />
               <Input
-                label="Salaire minimum"
+                label={t('offres.salaryMin')}
                 type="number"
                 value={filters.salaireMin}
                 onChange={(e) => handleFilterChange('salaireMin', e.target.value)}
@@ -154,7 +154,7 @@ const OffresPublic = () => {
                   className="flex items-center gap-2"
                 >
                   <X className="w-4 h-4" />
-                  Réinitialiser les filtres
+                  {t('offres.resetFilters')}
                 </Button>
               </div>
             )}
@@ -163,7 +163,7 @@ const OffresPublic = () => {
           {/* Résultats et tri */}
           <div className="mb-4 flex items-center justify-between flex-wrap gap-4">
             <p className="text-gray-400">
-              {filteredOffres.length} offre{filteredOffres.length > 1 ? 's' : ''} trouvée{filteredOffres.length > 1 ? 's' : ''}
+              {filteredOffres.length} {t('offres.offresFound')}
             </p>
             <div className="flex items-center gap-2">
               <ArrowUpDown className="w-4 h-4 text-gray-400" />
@@ -175,9 +175,9 @@ const OffresPublic = () => {
                 }}
                 className="w-auto min-w-[180px]"
                 options={[
-                  { value: 'recent', label: 'Plus récent' },
-                  { value: 'salaire', label: 'Salaire (décroissant)' },
-                  { value: 'pertinence', label: 'Pertinence' }
+                  { value: 'recent', label: t('offres.mostRecent') },
+                  { value: 'salaire', label: t('offres.salaryDesc') },
+                  { value: 'pertinence', label: t('offres.relevance') }
                 ]}
               />
             </div>
@@ -187,7 +187,7 @@ const OffresPublic = () => {
           {paginatedOffres.length === 0 ? (
             <Card>
               <p className="text-center text-gray-400 py-8">
-                Aucune offre ne correspond à vos critères
+                {t('offres.noOfferMatches')}
               </p>
             </Card>
           ) : (
@@ -211,10 +211,10 @@ const OffresPublic = () => {
                       </h3>
                       <div className="flex gap-2 ml-2">
                         {isNouveau && (
-                          <Badge variant="success">Nouveau</Badge>
+                          <Badge variant="success">{t('offres.new')}</Badge>
                         )}
                         {isUrgent && (
-                          <Badge variant="danger">Urgent</Badge>
+                          <Badge variant="danger">{t('offres.urgent')}</Badge>
                         )}
                       </div>
                     </div>
@@ -244,7 +244,7 @@ const OffresPublic = () => {
                       {offre.datePublication && (
                         <div className="flex items-center text-gray-500 text-xs">
                           <Calendar className="w-3 h-3 mr-2" />
-                          Publié le {new Date(offre.datePublication).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          {t('offres.publishedOn')} {new Date(offre.datePublication).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </div>
                       )}
                     </div>
@@ -282,6 +282,3 @@ const OffresPublic = () => {
 }
 
 export default OffresPublic
-
-
-

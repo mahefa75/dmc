@@ -13,13 +13,13 @@ const NotFound = () => {
         <div className="text-center">
           <h1 className="text-9xl font-display font-bold text-gold-500/30">404</h1>
           <h2 className="text-3xl font-semibold text-gray-100 mt-4">
-            Page non trouvée
+            {t('common.pageNotFound')}
           </h2>
           <p className="text-gray-400 mt-2 mb-8">
-            La page que vous recherchez n'existe pas ou a été déplacée.
+            {t('common.pageNotFoundDesc')}
           </p>
           <Link to="/">
-            <Button variant="gold">Retour à l'accueil</Button>
+            <Button variant="gold">{t('common.backToHome')}</Button>
           </Link>
         </div>
       </main>

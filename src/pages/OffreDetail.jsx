@@ -25,10 +25,10 @@ const OffreDetail = () => {
         <Header />
         <main className="flex-1 flex items-center justify-center">
           <Card>
-            <p className="text-center text-gray-400">Offre non trouvée</p>
+            <p className="text-center text-gray-400">{t('offres.notFound')}</p>
             <Link to="/offres">
               <Button variant="gold" className="mt-4">
-                Retour aux offres
+                {t('offres.backToOffers')}
               </Button>
             </Link>
           </Card>
@@ -53,25 +53,25 @@ const OffreDetail = () => {
 
   const handlePostuler = () => {
     if (!isAuthenticated) {
-      showToast('Veuillez vous connecter pour postuler', 'warning')
+      showToast(t('offres.pleaseLoginToApply'), 'warning')
       navigate('/login')
       return
     }
 
     if (user.role !== 'candidat') {
-      showToast('Seuls les candidats peuvent postuler', 'error')
+      showToast(t('offres.onlyCandidatesCanApply'), 'error')
       return
     }
 
     // Vérifier si déjà candidaté
     if (isAlreadyApplied()) {
-      showToast('Vous avez déjà postulé à cette offre', 'warning')
+      showToast(t('offres.alreadyApplied'), 'warning')
       return
     }
 
     // Vérifier profil complet
     if (!isProfileComplete()) {
-      showToast('Veuillez compléter votre profil (CV requis) avant de postuler', 'warning')
+      showToast(t('offres.completeProfileFirst'), 'warning')
       navigate('/candidat/profil')
       return
     }
@@ -92,7 +92,7 @@ const OffreDetail = () => {
     })
 
     setShowConfirmModal(false)
-    showToast('Candidature envoyée avec succès !', 'success')
+    showToast(t('offres.applicationSuccess'), 'success')
   }
 
   return (
@@ -101,7 +101,7 @@ const OffreDetail = () => {
       <main className="flex-1 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link to="/offres" className="text-gold-500 hover:text-gold-400 mb-4 inline-block">
-            ← Retour aux offres
+            ← {t('offres.backToOffers')}
           </Link>
 
           {/* Image/Bannière */}
@@ -127,7 +127,7 @@ const OffreDetail = () => {
                     <Badge variant="info">{offre.typeContrat}</Badge>
                   )}
                   {offre.statut === 'urgent' && (
-                    <Badge variant="danger">Urgent</Badge>
+                    <Badge variant="danger">{t('offres.urgent')}</Badge>
                   )}
                 </div>
               </div>
@@ -156,12 +156,12 @@ const OffreDetail = () => {
               )}
               <div className="flex items-center text-gray-400">
                 <Calendar className="w-5 h-5 mr-2 text-gold-500" />
-                <span>Publiée le {new Date(offre.datePublication).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                <span>{t('offres.publishedOn')} {new Date(offre.datePublication).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
               </div>
               {offre.dateExpiration && (
                 <div className="flex items-center text-gray-400">
                   <Clock className="w-5 h-5 mr-2 text-gold-500" />
-                  <span>Date limite : {new Date(offre.dateExpiration).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                  <span>{t('offres.deadline')} : {new Date(offre.dateExpiration).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                 </div>
               )}
             </div>
@@ -178,7 +178,7 @@ const OffreDetail = () => {
           </Card>
 
           <Card>
-            <h2 className="text-2xl font-semibold mb-4 text-gray-100">Description du poste</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-100">{t('offres.jobDescription')}</h2>
             <div className="prose max-w-none">
               <p className="text-gray-300 whitespace-pre-line">{offre.description}</p>
             </div>
@@ -211,24 +211,24 @@ const OffreDetail = () => {
 
           {offre.experienceMin !== undefined && (
             <Card className="mt-6">
-              <h2 className="text-2xl font-semibold mb-4 text-gray-100">Expérience minimale requise</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-gray-100">{t('offres.minExperience')}</h2>
               <div className="flex items-center text-gray-300">
                 <User className="w-5 h-5 mr-2 text-gold-500" />
-                <span>{offre.experienceMin} {offre.experienceMin > 1 ? 'années' : 'année'} d'expérience minimum</span>
+                <span>{offre.experienceMin} {t('offres.yearsExperience')}</span>
               </div>
             </Card>
           )}
 
           {offre.profilRecherche && (
             <Card className="mt-6">
-              <h2 className="text-2xl font-semibold mb-4 text-gray-100">Profil recherché</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-gray-100">{t('offres.searchedProfile')}</h2>
               <p className="text-gray-300 whitespace-pre-line">{offre.profilRecherche}</p>
             </Card>
           )}
 
           {offre.conditionsTravail && (
             <Card className="mt-6">
-              <h2 className="text-2xl font-semibold mb-4 text-gray-100">Conditions de travail</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-gray-100">{t('offres.workConditions')}</h2>
               <p className="text-gray-300 whitespace-pre-line">{offre.conditionsTravail}</p>
             </Card>
           )}
@@ -237,7 +237,7 @@ const OffreDetail = () => {
             <Card className="mt-6">
               <h2 className="text-2xl font-semibold mb-4 flex items-center text-gray-100">
                 <Award className="w-6 h-6 mr-2 text-gold-500" />
-                Avantages
+                {t('offres.benefits')}
               </h2>
               <div className="space-y-2">
                 {offre.avantages.split(', ').map((avantage, index) => (
@@ -258,23 +258,23 @@ const OffreDetail = () => {
       <Modal
         isOpen={showConfirmModal}
         onClose={() => setShowConfirmModal(false)}
-        title="Confirmer votre candidature"
+        title={t('offres.confirmApplication')}
         footer={
           <>
             <Button variant="outline" onClick={() => setShowConfirmModal(false)}>
-              Annuler
+              {t('common.cancel')}
             </Button>
             <Button variant="gold" onClick={confirmApplication}>
-              Confirmer
+              {t('common.confirm')}
             </Button>
           </>
         }
       >
         <p className="mb-4 text-gray-300">
-          Êtes-vous sûr de vouloir postuler à l'offre <strong className="text-gold-500">{offre?.titre}</strong> chez <strong className="text-gold-500">{offre?.entrepriseNom}</strong> ?
+          {t('offres.confirmApplicationText')} <strong className="text-gold-500">{offre?.titre}</strong> {t('offres.at')} <strong className="text-gold-500">{offre?.entrepriseNom}</strong> ?
         </p>
         <p className="text-sm text-gray-400">
-          Votre CV et votre lettre de motivation seront envoyés automatiquement.
+          {t('offres.autoSendDocs')}
         </p>
       </Modal>
     </div>
@@ -282,4 +282,3 @@ const OffreDetail = () => {
 }
 
 export default OffreDetail
-
