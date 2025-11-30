@@ -40,6 +40,7 @@ const Sidebar = ({ role }) => {
 
   const entrepriseMenu = [
     { path: '/entreprise/dashboard', icon: LayoutDashboard, label: t('entreprise.dashboard') },
+    { path: '/entreprise/profil', icon: User, label: t('nav.profil') },
     { path: '/entreprise/recherche-cv', icon: Users, label: t('entreprise.rechercheCV') },
     { path: '/entreprise/nouvelle-demande', icon: FileText, label: t('entreprise.nouvelleDemande') },
     { path: '/entreprise/demandes', icon: FileCheck, label: t('entreprise.mesDemandes') },

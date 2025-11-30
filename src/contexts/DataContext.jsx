@@ -61,8 +61,13 @@ export const DataProvider = ({ children }) => {
   // Configurer les listeners temps réel pour toutes les collections
   useEffect(() => {
     // Initialiser les données de démonstration si nécessaire (en arrière-plan)
-    initializeData().catch(error => {
+    initializeData().then(() => {
+      // Charger les données initiales après l'initialisation
+      loadAllData()
+    }).catch(error => {
       console.error('Erreur lors de l\'initialisation des données:', error)
+      // Charger quand même les données en cas d'erreur
+      loadAllData()
     })
 
     // Configurer les listeners temps réel
@@ -101,7 +106,19 @@ export const DataProvider = ({ children }) => {
     })
 
     const unsubscribeDemandes = FirebaseService.subscribeDemandesEntreprises((data) => {
-      setDemandesEntreprises(convertTimestamps(data))
+      if (data && data.length > 0) {
+        setDemandesEntreprises(convertTimestamps(data))
+      } else {
+        // Fallback vers localStorage si Firebase est vide
+        try {
+          const localDemandes = JSON.parse(localStorage.getItem('demandes-entreprises') || '[]')
+          if (localDemandes.length > 0) {
+            setDemandesEntreprises(localDemandes)
+          }
+        } catch (e) {
+          console.error('Erreur lors du chargement des demandes localStorage:', e)
+        }
+      }
     })
 
     const unsubscribeContrats = FirebaseService.subscribeContrats((data) => {

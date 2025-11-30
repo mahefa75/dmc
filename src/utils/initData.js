@@ -42,6 +42,23 @@ export const initializeData = async () => {
         console.log('✅ Données de démonstration initialisées dans Firebase')
         return { migrated: false, initialized: true }
       }
+    } else {
+      // Vérifier si les demandes de test pour contact@techmu.mu existent
+      const existingDemandes = await FirebaseService.getDemandesEntreprises()
+      const techmuDemandes = existingDemandes.filter(d => d.entrepriseId === 'demo-entreprise-001')
+      
+      if (techmuDemandes.length === 0) {
+        console.log('📝 Ajout des demandes de test pour contact@techmu.mu...')
+        const mockData = generateMockData()
+        const techmuDemandesToAdd = mockData.demandesEntreprises.filter(d => d.entrepriseId === 'demo-entreprise-001')
+        
+        if (techmuDemandesToAdd.length > 0) {
+          await Promise.all(
+            techmuDemandesToAdd.map(demande => FirebaseService.saveDemandeEntreprise(demande))
+          )
+          console.log(`✅ ${techmuDemandesToAdd.length} demandes de test ajoutées pour contact@techmu.mu`)
+        }
+      }
     }
     
     return { migrated: false, initialized: false }

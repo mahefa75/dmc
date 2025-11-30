@@ -1,21 +1,58 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Header, Sidebar } from '../../components/Layout'
-import { Card, Badge, Button } from '../../components/UI'
+import { Card, Badge, Button, Modal } from '../../components/UI'
 import { useAuth } from '../../contexts/AuthContext'
 import { useData } from '../../contexts/DataContext'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { useToast } from '../../components/UI/Toast'
-import { FileText, Calendar, User, Download, Eye, Edit, Trash2 } from 'lucide-react'
+import { FileText, Calendar, User, Download, Eye, Edit, Trash2, AlertTriangle } from 'lucide-react'
+import { addTestDemandes } from '../../utils/addTestDemandes'
 
 const EntrepriseMesDemandes = () => {
   const { user } = useAuth()
-  const { demandesEntreprises, updateDemandeEntreprise, users } = useData()
+  const { demandesEntreprises, updateDemandeEntreprise, users, refreshData } = useData()
   const { t } = useLanguage()
   const { showToast, ToastContainer } = useToast()
   const [draggedItem, setDraggedItem] = useState(null)
   const [selectedDemande, setSelectedDemande] = useState(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [demandeToDelete, setDemandeToDelete] = useState(null)
 
   const mesDemandes = demandesEntreprises.filter(d => d.entrepriseId === user?.id)
+
+  // Debug: afficher les informations dans la console
+  useEffect(() => {
+    console.log('User ID:', user?.id)
+    console.log('Total demandes:', demandesEntreprises.length)
+    console.log('Mes demandes:', mesDemandes.length)
+    console.log('Toutes les demandes:', demandesEntreprises)
+  }, [user, demandesEntreprises, mesDemandes])
+
+  const handleAddTestDemandes = async () => {
+    try {
+      console.log('🔄 Début de l\'ajout des demandes de test...')
+      showToast('Ajout des demandes en cours...', 'info')
+      const result = await addTestDemandes()
+      console.log('📊 Résultat:', result)
+      if (result.success) {
+        showToast(`✅ ${result.added} demandes ajoutées. Rechargement...`, 'success')
+        // Attendre un peu pour que Firebase se synchronise
+        setTimeout(() => {
+          refreshData()
+          // Recharger aussi après 2 secondes
+          setTimeout(() => {
+            refreshData()
+          }, 2000)
+        }, 1000)
+      } else {
+        showToast(`Erreur: ${result.error || 'Erreur inconnue'}`, 'error')
+        console.error('❌ Erreur:', result)
+      }
+    } catch (error) {
+      console.error('❌ Exception lors de l\'ajout:', error)
+      showToast(`Erreur: ${error.message}`, 'error')
+    }
+  }
 
   // Mapping des statuts vers les colonnes Kanban
   const statutToColumn = {
@@ -74,10 +111,17 @@ const EntrepriseMesDemandes = () => {
   }
 
   const handleDelete = (id) => {
-    if (window.confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')) {
-      // Note: deleteDemandeEntreprise n'est pas encore dans DataContext, on peut juste mettre à jour le statut
-      updateDemandeEntreprise(id, { statut: 'supprime' })
-      showToast('Demande supprimée', 'success')
+    const demande = mesDemandes.find(d => d.id === id)
+    setDemandeToDelete(demande)
+    setShowDeleteModal(true)
+  }
+
+  const confirmDelete = () => {
+    if (demandeToDelete) {
+      updateDemandeEntreprise(demandeToDelete.id, { statut: 'supprime' })
+      showToast('Demande supprimée avec succès', 'success')
+      setShowDeleteModal(false)
+      setDemandeToDelete(null)
     }
   }
 
@@ -95,9 +139,18 @@ const EntrepriseMesDemandes = () => {
         <main className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-3xl font-display font-bold text-gray-100">{t('entreprise.mesDemandes')}</h1>
-            <Button variant="gold" onClick={() => window.location.href = '/entreprise/nouvelle-demande'}>
-              Nouvelle demande
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="secondary" 
+                onClick={handleAddTestDemandes}
+                title="Ajouter des demandes de test pour le développement"
+              >
+                🔧 Ajouter demandes de test
+              </Button>
+              <Button variant="gold" onClick={() => window.location.href = '/entreprise/nouvelle-demande'}>
+                Nouvelle demande
+              </Button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 overflow-x-auto pb-4">
@@ -195,6 +248,54 @@ const EntrepriseMesDemandes = () => {
         </main>
       </div>
       <ToastContainer />
+      
+      {/* Modal de confirmation de suppression */}
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false)
+          setDemandeToDelete(null)
+        }}
+        title=""
+        size="sm"
+      >
+        <div className="text-center">
+          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-500/20 mb-4">
+            <AlertTriangle className="h-8 w-8 text-red-500" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-100 mb-2">
+            Supprimer la demande ?
+          </h3>
+          <p className="text-gray-300 mb-1">
+            Êtes-vous sûr de vouloir supprimer la demande pour
+          </p>
+          {demandeToDelete && (
+            <p className="text-gold-500 font-semibold mb-4">
+              "{demandeToDelete.posteRecherche || 'Poste non spécifié'}" ?
+            </p>
+          )}
+          <p className="text-sm text-gray-400 mb-6">
+            Cette action est irréversible et la demande sera définitivement supprimée.
+          </p>
+        </div>
+        <div className="flex gap-3 justify-center">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowDeleteModal(false)
+              setDemandeToDelete(null)
+            }}
+          >
+            Annuler
+          </Button>
+          <Button
+            variant="danger"
+            onClick={confirmDelete}
+          >
+            Supprimer
+          </Button>
+        </div>
+      </Modal>
     </div>
   )
 }

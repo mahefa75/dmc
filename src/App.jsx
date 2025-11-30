@@ -27,6 +27,7 @@ import CandidatMessagerie from './pages/Candidat/Messagerie'
 
 // Pages entreprise
 import EntrepriseDashboard from './pages/Entreprise/Dashboard'
+import EntrepriseProfil from './pages/Entreprise/Profil'
 import EntrepriseRechercheCV from './pages/Entreprise/RechercheCV'
 import EntrepriseProfilCandidat from './pages/Entreprise/ProfilCandidat'
 import EntrepriseNouvelleDemande from './pages/Entreprise/NouvelleDemande'
@@ -138,6 +139,14 @@ function App() {
                 element={
                   <ProtectedRoute role="entreprise">
                     <EntrepriseDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/entreprise/profil"
+                element={
+                  <ProtectedRoute role="entreprise">
+                    <EntrepriseProfil />
                   </ProtectedRoute>
                 }
               />

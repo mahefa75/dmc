@@ -28,7 +28,13 @@ const DEMO_USERS = {
     nom: 'TechMU Ltd',
     prenom: 'Contact',
     role: 'entreprise',
+    nomEntreprise: 'TechMU Ltd',
     entreprise: 'TechMU Ltd',
+    secteur: 'Construction',
+    telephone: '+2301234567',
+    adresse: 'Port-Louis, Maurice',
+    abonnement: 'Premium',
+    statut: 'actif',
     createdAt: '2024-01-15T00:00:00.000Z'
   },
   'jean.rakoto@email.mg': {

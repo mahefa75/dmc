@@ -362,13 +362,90 @@ export const generateMockData = () => {
   const messages = generateMessages(users)
   const notifications = generateNotifications(users)
 
+  // Générer des demandes de test pour l'entreprise contact@techmu.mu
+  const generateDemandesEntreprises = () => {
+    const entrepriseId = 'demo-entreprise-001'
+    const nomEntreprise = 'TechMU Ltd'
+    const email = 'contact@techmu.mu'
+    
+    const postes = [
+      'Ouvrier de chantier',
+      'Serveur/Serveuse',
+      'Agent de sécurité',
+      'Cuisinier',
+      'Manutentionnaire',
+      'Agent de nettoyage'
+    ]
+    
+    const secteurs = ['Construction', 'Hôtellerie', 'Sécurité', 'Nettoyage', 'Logistique']
+    const localisations = ['Port-Louis', 'Curepipe', 'Quatre-Bornes', 'Flic-en-Flac', 'Grand-Baie']
+    const typesContrat = ['CDI', 'CDD', 'Intérim', 'Saisonnier']
+    
+    const statuts = [
+      'en_attente',      // Demande envoyée
+      'preselection',    // Présélection
+      'entretien_planifie', // Entretien planifié
+      'validation',      // Validation
+      'documents',       // Documents
+      'finalise'         // Finalisé
+    ]
+    
+    const demandes = []
+    
+    // Créer une demande pour chaque statut
+    statuts.forEach((statut, index) => {
+      const dateCreation = new Date()
+      dateCreation.setDate(dateCreation.getDate() - (statuts.length - index) * 7) // Espacer de 7 jours
+      
+      demandes.push({
+        id: generateId(),
+        entrepriseId: entrepriseId,
+        nomEntreprise: nomEntreprise,
+        email: email,
+        posteRecherche: postes[index % postes.length],
+        secteur: secteurs[index % secteurs.length],
+        localisation: localisations[index % localisations.length],
+        typeContrat: typesContrat[index % typesContrat.length],
+        nombrePostes: (index % 3) + 1,
+        salaireMin: 15000 + (index * 2000),
+        salaireMax: 25000 + (index * 3000),
+        dateDebut: new Date(dateCreation.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        experienceMin: index % 3,
+        niveauEtudes: ['Sans diplôme', 'CAP/BEP', 'BAC', 'BAC+2'][index % 4],
+        competences: [`Compétence ${index + 1}`, `Compétence ${index + 2}`],
+        competencesSouhaitees: index > 2 ? [`Bonus ${index}`] : [],
+        langues: ['Français', 'Anglais'],
+        ageMin: 20 + index,
+        ageMax: 45 + index,
+        description: `Description détaillée pour le poste de ${postes[index % postes.length]} dans le secteur ${secteurs[index % secteurs.length]}.`,
+        missions: `Missions principales pour ce poste.`,
+        responsabilites: `Responsabilités du poste.`,
+        conditions: `Conditions de travail.`,
+        avantages: `Avantages offerts.`,
+        evolution: `Perspectives d'évolution.`,
+        urgence: index === 0 ? 'urgent' : index === 1 ? 'tres_urgent' : 'normal',
+        delai: new Date(dateCreation.getTime() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        budget: 50000 + (index * 10000),
+        signatureNom: 'Contact TechMU',
+        statut: statut,
+        dateCreation: dateCreation.toISOString(),
+        fichePoste: null,
+        autresDocuments: null
+      })
+    })
+    
+    return demandes
+  }
+
+  const demandesEntreprises = generateDemandesEntreprises()
+
   return {
     users,
     offres,
     candidatures,
     messages,
     notifications,
-    demandesEntreprises: [],
+    demandesEntreprises,
     contrats: []
   }
 }
