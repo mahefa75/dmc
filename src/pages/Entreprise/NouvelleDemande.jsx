@@ -20,12 +20,14 @@ const EntrepriseNouvelleDemande = () => {
     secteur: '',
     localisation: '',
     typeContrat: '',
-    nombrePostes: '',
-    salaire: '',
+    nombrePostes: '1',
+    salaireMin: '',
+    salaireMax: '',
     dateDebut: '',
     experienceMin: '',
     niveauEtudes: '',
     competences: [],
+    competencesSouhaitees: [],
     langues: [],
     ageMin: '',
     ageMax: '',
@@ -38,10 +40,13 @@ const EntrepriseNouvelleDemande = () => {
     evolution: '',
     urgence: 'normal',
     delai: '',
-    budget: ''
+    budget: '',
+    signatureNom: ''
   })
   const [file, setFile] = useState(null)
+  const [autresDocuments, setAutresDocuments] = useState(null)
   const [newCompetence, setNewCompetence] = useState('')
+  const [newCompetenceSouhaitee, setNewCompetenceSouhaitee] = useState('')
   const [newLangue, setNewLangue] = useState('')
 
   const validateStep = (stepNum) => {
@@ -83,6 +88,7 @@ const EntrepriseNouvelleDemande = () => {
       email: user.email,
       ...formData,
       fichePoste: file,
+      autresDocuments: autresDocuments,
       statut: 'en_attente',
       dateCreation: new Date().toISOString()
     }
@@ -108,6 +114,23 @@ const EntrepriseNouvelleDemande = () => {
     setFormData({
       ...formData,
       competences: formData.competences.filter((_, i) => i !== index)
+    })
+  }
+
+  const addCompetenceSouhaitee = () => {
+    if (newCompetenceSouhaitee.trim()) {
+      setFormData({
+        ...formData,
+        competencesSouhaitees: [...formData.competencesSouhaitees, newCompetenceSouhaitee.trim()]
+      })
+      setNewCompetenceSouhaitee('')
+    }
+  }
+
+  const removeCompetenceSouhaitee = (index) => {
+    setFormData({
+      ...formData,
+      competencesSouhaitees: formData.competencesSouhaitees.filter((_, i) => i !== index)
     })
   }
 
@@ -138,15 +161,19 @@ const EntrepriseNouvelleDemande = () => {
 
           <Card>
             <div className="mb-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-center w-full max-w-2xl mx-auto">
                 {[1, 2, 3, 4, 5].map(s => (
-                  <div key={s} className="flex items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
+                  <div key={s} className="flex items-center flex-1">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold flex-shrink-0 z-10 ${
                       step >= s ? 'bg-gold-500 text-navy-900' : 'bg-navy-700 text-gray-400'
                     }`}>
                       {s}
                     </div>
-                    {s < 5 && <div className={`w-16 h-1 ${step > s ? 'bg-gold-500' : 'bg-navy-700'}`} />}
+                    {s < 5 && (
+                      <div 
+                        className={`h-1 flex-1 mx-1 ${step > s ? 'bg-gold-500' : 'bg-navy-700'}`}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
@@ -189,11 +216,21 @@ const EntrepriseNouvelleDemande = () => {
                     value={formData.nombrePostes}
                     onChange={(e) => setFormData({ ...formData, nombrePostes: e.target.value })}
                   />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
                   <Input
-                    label="Salaire (MUR)"
+                    label="Salaire minimum (MUR)"
                     type="number"
-                    value={formData.salaire}
-                    onChange={(e) => setFormData({ ...formData, salaire: e.target.value })}
+                    value={formData.salaireMin}
+                    onChange={(e) => setFormData({ ...formData, salaireMin: e.target.value })}
+                    placeholder="Minimum"
+                  />
+                  <Input
+                    label="Salaire maximum (MUR)"
+                    type="number"
+                    value={formData.salaireMax}
+                    onChange={(e) => setFormData({ ...formData, salaireMax: e.target.value })}
+                    placeholder="Maximum"
                   />
                 </div>
                 <Input
@@ -225,7 +262,7 @@ const EntrepriseNouvelleDemande = () => {
                   onChange={(e) => setFormData({ ...formData, experienceMin: e.target.value })}
                 />
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Compétences requises</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-2">Compétences requises</label>
                   <div className="flex gap-2 mb-2">
                     <Input
                       value={newCompetence}
@@ -249,7 +286,31 @@ const EntrepriseNouvelleDemande = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Langues requises</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-2">Compétences souhaitées (bonus)</label>
+                  <div className="flex gap-2 mb-2">
+                    <Input
+                      value={newCompetenceSouhaitee}
+                      onChange={(e) => setNewCompetenceSouhaitee(e.target.value)}
+                      placeholder="Ajouter une compétence souhaitée"
+                      onKeyPress={(e) => e.key === 'Enter' && addCompetenceSouhaitee()}
+                    />
+                    <Button onClick={addCompetenceSouhaitee} variant="outline">
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {formData.competencesSouhaitees.map((comp, index) => (
+                      <span key={index} className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                        {comp}
+                        <button onClick={() => removeCompetenceSouhaitee(index)} className="text-purple-600 hover:text-purple-800">
+                          <X className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-100 mb-2">Langues requises</label>
                   <div className="flex gap-2 mb-2">
                     <Input
                       value={newLangue}
@@ -304,62 +365,62 @@ const EntrepriseNouvelleDemande = () => {
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold mb-4 text-gray-100">Description détaillée</h2>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Description du poste *</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-1">Description du poste *</label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 text-gray-100 border border-navy-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-gold-500 placeholder:text-gray-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Missions principales</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-1">Missions principales</label>
                   <textarea
                     value={formData.missions}
                     onChange={(e) => setFormData({ ...formData, missions: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 text-gray-100 border border-navy-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-gold-500 placeholder:text-gray-500"
                     placeholder="Décrivez les missions principales du poste..."
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Responsabilités</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-1">Responsabilités</label>
                   <textarea
                     value={formData.responsabilites}
                     onChange={(e) => setFormData({ ...formData, responsabilites: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 text-gray-100 border border-navy-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-gold-500 placeholder:text-gray-500"
                     placeholder="Listez les responsabilités..."
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Conditions de travail</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-1">Conditions de travail</label>
                   <textarea
                     value={formData.conditions}
                     onChange={(e) => setFormData({ ...formData, conditions: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 text-gray-100 border border-navy-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-gold-500 placeholder:text-gray-500"
                     placeholder="Horaires, environnement, etc."
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Avantages</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-1">Avantages</label>
                   <textarea
                     value={formData.avantages}
                     onChange={(e) => setFormData({ ...formData, avantages: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 text-gray-100 border border-navy-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-gold-500 placeholder:text-gray-500"
                     placeholder="Avantages offerts (salaire, logement, transport, etc.)"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Évolution de carrière</label>
+                  <label className="block text-sm font-medium text-gray-100 mb-1">Évolution de carrière</label>
                   <textarea
                     value={formData.evolution}
                     onChange={(e) => setFormData({ ...formData, evolution: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 text-gray-100 border border-navy-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-gold-500 placeholder:text-gray-500"
                     placeholder="Perspectives d'évolution..."
                   />
                 </div>
@@ -379,6 +440,12 @@ const EntrepriseNouvelleDemande = () => {
                   accept=".pdf,.doc,.docx"
                   onFileSelect={setFile}
                   value={file ? { name: file.name || 'fiche-poste.pdf', size: file.size || 0 } : null}
+                />
+                <FileUpload
+                  label="Autres documents (contrat type, présentation entreprise)"
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  onFileSelect={setAutresDocuments}
+                  value={autresDocuments ? { name: autresDocuments.name || 'autres-documents.pdf', size: autresDocuments.size || 0 } : null}
                 />
                 <Select
                   label="Niveau d'urgence"
@@ -423,7 +490,15 @@ const EntrepriseNouvelleDemande = () => {
                       <p><strong>Localisation:</strong> {formData.localisation}</p>
                       <p><strong>Type de contrat:</strong> {formData.typeContrat}</p>
                       {formData.nombrePostes && <p><strong>Nombre de postes:</strong> {formData.nombrePostes}</p>}
-                      {formData.salaire && <p><strong>Salaire:</strong> {formData.salaire} MUR</p>}
+                      {(formData.salaireMin || formData.salaireMax) && (
+                        <p><strong>Salaire:</strong> {
+                          formData.salaireMin && formData.salaireMax 
+                            ? `${formData.salaireMin} - ${formData.salaireMax} MUR`
+                            : formData.salaireMin 
+                            ? `À partir de ${formData.salaireMin} MUR`
+                            : `Jusqu'à ${formData.salaireMax} MUR`
+                        }</p>
+                      )}
                     </div>
                   </div>
                   {formData.experienceMin && (
@@ -433,7 +508,10 @@ const EntrepriseNouvelleDemande = () => {
                         {formData.experienceMin && <p><strong>Expérience minimale:</strong> {formData.experienceMin} ans</p>}
                         {formData.niveauEtudes && <p><strong>Niveau d'études:</strong> {formData.niveauEtudes}</p>}
                         {formData.competences.length > 0 && (
-                          <p><strong>Compétences:</strong> {formData.competences.join(', ')}</p>
+                          <p><strong>Compétences requises:</strong> {formData.competences.join(', ')}</p>
+                        )}
+                        {formData.competencesSouhaitees.length > 0 && (
+                          <p><strong>Compétences souhaitées (bonus):</strong> {formData.competencesSouhaitees.join(', ')}</p>
                         )}
                         {formData.langues.length > 0 && (
                           <p><strong>Langues:</strong> {formData.langues.join(', ')}</p>
@@ -456,20 +534,39 @@ const EntrepriseNouvelleDemande = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="accept"
-                    required
-                    className="w-4 h-4"
-                  />
-                  <label htmlFor="accept" className="text-sm text-gray-700">
-                    J'accepte les conditions générales et confirme l'exactitude des informations fournies
-                  </label>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="accept"
+                      required
+                      className="w-4 h-4"
+                    />
+                    <label htmlFor="accept" className="text-sm text-gray-100">
+                      J'accepte les conditions générales et confirme l'exactitude des informations fournies
+                    </label>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-100 mb-2">Signature électronique</label>
+                    <Input
+                      label="Nom et prénom"
+                      value={formData.signatureNom}
+                      onChange={(e) => setFormData({ ...formData, signatureNom: e.target.value })}
+                      placeholder="Votre nom et prénom"
+                      required
+                    />
+                    <p className="text-xs text-gray-400 mt-1">En saisissant votre nom, vous confirmez votre signature électronique</p>
+                  </div>
                 </div>
                 <div className="flex gap-4">
                   <Button onClick={handlePrevious} variant="secondary">Précédent</Button>
-                  <Button onClick={handleSubmit} variant="gold">Envoyer la demande</Button>
+                  <Button 
+                    onClick={handleSubmit} 
+                    variant="gold"
+                    disabled={!formData.signatureNom}
+                  >
+                    Envoyer la demande
+                  </Button>
                 </div>
               </div>
             )}
