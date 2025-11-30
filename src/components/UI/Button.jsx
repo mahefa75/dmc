@@ -10,15 +10,17 @@ const Button = ({
   className = '',
   ...props
 }) => {
-  const baseClasses = 'font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
+  const baseClasses = 'font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-navy-900'
   
   const variants = {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500',
-    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-500',
-    success: 'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500',
-    danger: 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500',
-    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
-    ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500'
+    primary: 'bg-gold-500 hover:bg-gold-400 text-navy-900 focus:ring-gold-500',
+    secondary: 'bg-navy-700 hover:bg-navy-600 text-gray-100 focus:ring-navy-500 border border-navy-600',
+    success: 'bg-emerald-600 hover:bg-emerald-500 text-white focus:ring-emerald-500',
+    danger: 'bg-red-600 hover:bg-red-500 text-white focus:ring-red-500',
+    outline: 'border-2 border-gold-500 text-gold-500 hover:bg-gold-500 hover:text-navy-900 focus:ring-gold-500',
+    ghost: 'text-gray-300 hover:bg-navy-700 hover:text-white focus:ring-navy-500',
+    gold: 'bg-gold-500 hover:bg-gold-400 text-navy-900 focus:ring-gold-500 font-bold',
+    'outline-gold': 'border-2 border-gold-500 text-gold-500 hover:bg-gold-500/10 focus:ring-gold-500'
   }
   
   const sizes = {
@@ -45,9 +47,3 @@ const Button = ({
 }
 
 export default Button
-
-
-
-
-
-

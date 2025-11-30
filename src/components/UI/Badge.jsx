@@ -9,12 +9,12 @@ const Badge = ({
   className = ''
 }) => {
   const variants = {
-    default: 'bg-gray-200 text-gray-800',
-    primary: 'bg-blue-100 text-blue-800',
-    success: 'bg-green-100 text-green-800',
-    warning: 'bg-yellow-100 text-yellow-800',
-    danger: 'bg-red-100 text-red-800',
-    info: 'bg-cyan-100 text-cyan-800'
+    default: 'bg-navy-600 text-gray-200',
+    primary: 'bg-gold-500/20 text-gold-400 border border-gold-500/30',
+    success: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    warning: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    danger: 'bg-red-500/20 text-red-400 border border-red-500/30',
+    info: 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
   }
   
   const sizes = {
@@ -32,7 +32,7 @@ const Badge = ({
       {removable && (
         <button
           onClick={onRemove}
-          className="ml-1 hover:bg-opacity-80 rounded-full p-0.5"
+          className="ml-1 hover:bg-white/10 rounded-full p-0.5 transition-colors"
           aria-label="Supprimer"
         >
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -49,9 +49,3 @@ const Badge = ({
 }
 
 export default Badge
-
-
-
-
-
-

@@ -72,20 +72,19 @@ const EntreprisePublic = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <main className="flex-1">
         {/* Hero */}
-        <section className="bg-gradient-to-r from-green-600 to-green-800 text-white py-16">
+        <section className="bg-gradient-to-r from-navy-800 to-navy-900 py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl font-bold mb-4">Recrutez les meilleurs talents malgaches</h1>
-            <p className="text-xl mb-8 text-green-100">
+            <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">Recrutez les <span className="text-gold-500">meilleurs talents</span> malgaches</h1>
+            <p className="text-xl mb-8 text-gray-400">
               Une plateforme dédiée au recrutement de travailleurs qualifiés pour votre entreprise à Maurice
             </p>
             <Button
-              variant="outline"
+              variant="gold"
               size="lg"
-              className="bg-white text-green-600 hover:bg-green-50"
               onClick={() => setShowForm(true)}
             >
               Demander un accès
@@ -94,17 +93,17 @@ const EntreprisePublic = () => {
         </section>
 
         {/* Avantages */}
-        <section className="py-16">
+        <section className="py-16 bg-navy-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">Nos avantages</h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Nos <span className="text-gold-500">avantages</span></h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {avantages.map((avantage, index) => {
                 const Icon = avantage.icon
                 return (
                   <Card key={index} hover className="text-center">
-                    <Icon className="w-12 h-12 text-green-600 mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">{avantage.titre}</h3>
-                    <p className="text-gray-600">{avantage.desc}</p>
+                    <Icon className="w-12 h-12 text-gold-500 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold mb-2 text-gray-100">{avantage.titre}</h3>
+                    <p className="text-gray-400">{avantage.desc}</p>
                   </Card>
                 )
               })}
@@ -113,9 +112,9 @@ const EntreprisePublic = () => {
         </section>
 
         {/* Nos formules */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">Nos formules</h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Nos <span className="text-gold-500">formules</span></h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Formule Basique */}
               <Card className="relative">
@@ -241,9 +240,9 @@ const EntreprisePublic = () => {
         </section>
 
         {/* Processus */}
-        <section className="py-16">
+        <section className="py-16 bg-navy-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">Notre processus de recrutement</h2>
+            <h2 className="text-3xl font-display font-bold text-center mb-12 text-gray-100">Notre <span className="text-gold-500">processus</span> de recrutement</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
                 'Demande d\'accès',
@@ -254,10 +253,10 @@ const EntreprisePublic = () => {
                 'Finalisation'
               ].map((etape, index) => (
                 <Card key={index} className="text-center">
-                  <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+                  <div className="w-10 h-10 bg-gold-500 text-navy-900 rounded-full flex items-center justify-center font-bold mx-auto mb-2">
                     {index + 1}
                   </div>
-                  <p className="text-sm font-medium">{etape}</p>
+                  <p className="text-sm font-medium text-gray-300">{etape}</p>
                 </Card>
               ))}
             </div>

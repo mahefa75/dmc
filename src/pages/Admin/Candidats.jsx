@@ -34,15 +34,15 @@ const AdminCandidats = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="admin" />
         <main className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold">{t('admin.candidats')}</h1>
+            <h1 className="text-3xl font-display font-bold text-gray-100">{t('admin.candidats')}</h1>
             <Link to="/admin/candidats/nouveau">
-              <Button variant="primary">Nouveau candidat</Button>
+              <Button variant="gold">Nouveau candidat</Button>
             </Link>
           </div>
 
@@ -56,9 +56,3 @@ const AdminCandidats = () => {
 }
 
 export default AdminCandidats
-
-
-
-
-
-

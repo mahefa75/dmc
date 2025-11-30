@@ -43,12 +43,12 @@ const AdminOffreForm = () => {
   const isEditMode = !!id
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="admin" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">
             {isEditMode ? t('admin.offresEditTitle') : t('admin.offresNewTitle')}
           </h1>
 
@@ -81,12 +81,12 @@ const AdminOffreForm = () => {
                 required
               />
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Description</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows={5}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  className="w-full px-4 py-2 bg-navy-800 border border-navy-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
                   required
                 />
               </div>
@@ -102,8 +102,8 @@ const AdminOffreForm = () => {
                 onChange={(e) => setFormData({ ...formData, statut: e.target.value })}
                 options={['active', 'expiree', 'pourvue']}
               />
-              <div className="flex gap-4">
-                <Button onClick={handleSubmit} variant="primary">Enregistrer</Button>
+              <div className="flex gap-4 pt-4">
+                <Button onClick={handleSubmit} variant="gold">Enregistrer</Button>
                 <Button onClick={() => navigate('/admin/offres')} variant="secondary">Annuler</Button>
               </div>
             </div>
@@ -116,9 +116,3 @@ const AdminOffreForm = () => {
 }
 
 export default AdminOffreForm
-
-
-
-
-
-

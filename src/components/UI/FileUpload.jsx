@@ -84,17 +84,17 @@ const FileUpload = ({
   return (
     <div className={`w-full ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-300 mb-1">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-gold-500 ml-1">*</span>}
         </label>
       )}
 
       <div
         className={`
           border-2 border-dashed rounded-lg p-6
-          transition-colors
-          ${dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}
+          transition-colors bg-navy-800
+          ${dragActive ? 'border-gold-500 bg-gold-500/5' : 'border-navy-600'}
           ${error ? 'border-red-500' : ''}
         `}
         onDragEnter={handleDrag}
@@ -111,7 +111,7 @@ const FileUpload = ({
             />
             <button
               onClick={removeFile}
-              className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+              className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -119,27 +119,27 @@ const FileUpload = ({
         ) : value ? (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Upload className="w-5 h-5 text-gray-400" />
-              <span className="text-sm text-gray-700">
+              <Upload className="w-5 h-5 text-gold-500" />
+              <span className="text-sm text-gray-300">
                 {value.name} ({formatFileSize(value.size)})
               </span>
             </div>
             <button
               onClick={removeFile}
-              className="p-1 text-red-500 hover:text-red-600"
+              className="p-1 text-red-400 hover:text-red-300 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
         ) : (
           <div className="text-center">
-            <Upload className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm text-gray-600 mb-1">
+            <Upload className="w-12 h-12 text-gray-500 mx-auto mb-2" />
+            <p className="text-sm text-gray-400 mb-1">
               Glissez-déposez un fichier ici ou{' '}
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="text-blue-600 hover:text-blue-700 underline"
+                className="text-gold-500 hover:text-gold-400 underline transition-colors"
               >
                 parcourez
               </button>
@@ -161,16 +161,10 @@ const FileUpload = ({
       </div>
 
       {error && (
-        <p className="mt-1 text-sm text-red-500">{error}</p>
+        <p className="mt-1 text-sm text-red-400">{error}</p>
       )}
     </div>
   )
 }
 
 export default FileUpload
-
-
-
-
-
-

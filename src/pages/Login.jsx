@@ -5,6 +5,7 @@ import { Input, Button, Card } from '../components/UI'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useToast } from '../components/UI/Toast'
+import { Diamond } from 'lucide-react'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -39,14 +40,28 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
-      <main className="flex-1 flex items-center justify-center p-4 bg-gray-50">
-        <div className="w-full max-w-md">
-          <Card>
-            <h1 className="text-3xl font-bold text-center mb-6">{t('auth.login')}</h1>
+      <main className="flex-1 flex items-center justify-center p-4">
+        {/* Background decorations */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="w-full max-w-md relative z-10">
+          <Card variant="glass" className="p-8">
+            <div className="flex justify-center mb-6">
+              <Diamond className="w-12 h-12 text-gold-500" />
+            </div>
+            <h1 className="text-3xl font-display font-bold text-center mb-2 text-gray-100">
+              {t('auth.login')}
+            </h1>
+            <p className="text-gray-400 text-center mb-8">
+              Accédez à votre espace personnel
+            </p>
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <Input
                 label={t('auth.email')}
                 type="email"
@@ -64,24 +79,24 @@ const Login = () => {
                 required
               />
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-end">
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-blue-600 hover:underline"
+                  className="text-sm text-gold-500 hover:text-gold-400 transition-colors"
                 >
                   {t('auth.forgotPassword')}
                 </Link>
               </div>
 
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
                   {error}
                 </div>
               )}
 
               <Button
                 type="submit"
-                variant="primary"
+                variant="gold"
                 className="w-full"
                 disabled={loading}
               >
@@ -89,10 +104,10 @@ const Login = () => {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-400">
                 {t('auth.noAccount')}{' '}
-                <Link to="/register" className="text-blue-600 hover:underline">
+                <Link to="/register" className="text-gold-500 hover:text-gold-400 transition-colors">
                   {t('auth.register')}
                 </Link>
               </p>
@@ -107,4 +122,3 @@ const Login = () => {
 }
 
 export default Login
-

@@ -39,12 +39,14 @@ const AdminCandidatForm = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="admin" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">{id === 'nouveau' ? 'Nouveau candidat' : 'Modifier candidat'}</h1>
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">
+            {id === 'nouveau' ? 'Nouveau candidat' : 'Modifier candidat'}
+          </h1>
 
           <Card>
             <div className="space-y-4">
@@ -72,8 +74,8 @@ const AdminCandidatForm = () => {
                 value={formData.telephone}
                 onChange={(e) => setFormData({ ...formData, telephone: e.target.value })}
               />
-              <div className="flex gap-4">
-                <Button onClick={handleSubmit} variant="primary">Enregistrer</Button>
+              <div className="flex gap-4 pt-4">
+                <Button onClick={handleSubmit} variant="gold">Enregistrer</Button>
                 <Button onClick={() => navigate('/admin/candidats')} variant="secondary">Annuler</Button>
               </div>
             </div>
@@ -86,9 +88,3 @@ const AdminCandidatForm = () => {
 }
 
 export default AdminCandidatForm
-
-
-
-
-
-

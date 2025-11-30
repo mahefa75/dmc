@@ -188,3 +188,5 @@ Si l'erreur persiste :
 - [Documentation Vite - Variables d'environnement](https://vitejs.dev/guide/env-and-mode.html)
 - [Documentation Firebase](https://firebase.google.com/docs)
 
+
+

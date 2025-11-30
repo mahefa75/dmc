@@ -21,16 +21,16 @@ const AdminContrats = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="admin" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">{t('admin.contrats')}</h1>
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">{t('admin.contrats')}</h1>
 
           <Card>
             {contrats.length === 0 ? (
-              <p className="text-center text-gray-500 py-8">Aucun contrat</p>
+              <p className="text-center text-gray-400 py-8">Aucun contrat</p>
             ) : (
               <Table columns={columns} data={contrats} />
             )}
@@ -42,9 +42,3 @@ const AdminContrats = () => {
 }
 
 export default AdminContrats
-
-
-
-
-
-

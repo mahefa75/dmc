@@ -88,13 +88,13 @@ const CandidatNotifications = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="candidat" />
         <main className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold">{t('notifications.title')}</h1>
+            <h1 className="text-3xl font-display font-bold text-gray-100">{t('notifications.title')}</h1>
             <div className="flex gap-2">
               <Button variant="outline" size="sm" onClick={handleMarkAllAsRead}>
                 <CheckCircle className="w-4 h-4 mr-1" />
@@ -137,19 +137,19 @@ const CandidatNotifications = () => {
 
           {mesNotifications.length === 0 ? (
             <Card>
-              <p className="text-center text-gray-500 py-8">{t('notifications.noNotifications')}</p>
+              <p className="text-center text-gray-400 py-8">{t('notifications.noNotifications')}</p>
             </Card>
           ) : (
             <div className="space-y-8">
               {/* Aujourd'hui */}
               {groupedNotifications.today.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-semibold mb-4">{t('notifications.today')}</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-gray-100">{t('notifications.today')}</h2>
                   <div className="space-y-4">
                     {groupedNotifications.today.map(notif => (
                       <Card
                         key={notif.id}
-                        className={`cursor-pointer ${!notif.lu ? 'bg-blue-50' : ''}`}
+                        className={`cursor-pointer ${!notif.lu ? 'bg-gold-500/10 border-gold-500/30' : ''}`}
                         onClick={() => handleMarkAsRead(notif.id)}
                       >
                         <div className="flex items-start justify-between">
@@ -169,8 +169,8 @@ const CandidatNotifications = () => {
                               className="mt-1"
                             />
                             <div className="flex-1">
-                              <p className="font-medium">{notif.message}</p>
-                              <p className="text-sm text-gray-500 mt-1">
+                              <p className="font-medium text-gray-100">{notif.message}</p>
+                              <p className="text-sm text-gray-400 mt-1">
                                 {new Date(notif.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                               </p>
                             </div>
@@ -188,12 +188,12 @@ const CandidatNotifications = () => {
               {/* Hier */}
               {groupedNotifications.yesterday.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-semibold mb-4">{t('notifications.yesterday')}</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-gray-100">{t('notifications.yesterday')}</h2>
                   <div className="space-y-4">
                     {groupedNotifications.yesterday.map(notif => (
                       <Card
                         key={notif.id}
-                        className={`cursor-pointer ${!notif.lu ? 'bg-blue-50' : ''}`}
+                        className={`cursor-pointer ${!notif.lu ? 'bg-gold-500/10 border-gold-500/30' : ''}`}
                         onClick={() => handleMarkAsRead(notif.id)}
                       >
                         <div className="flex items-start justify-between">
@@ -213,8 +213,8 @@ const CandidatNotifications = () => {
                               className="mt-1"
                             />
                             <div className="flex-1">
-                              <p className="font-medium">{notif.message}</p>
-                              <p className="text-sm text-gray-500 mt-1">
+                              <p className="font-medium text-gray-100">{notif.message}</p>
+                              <p className="text-sm text-gray-400 mt-1">
                                 {new Date(notif.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'numeric', year: 'numeric' })}
                               </p>
                             </div>
@@ -232,12 +232,12 @@ const CandidatNotifications = () => {
               {/* Plus ancien */}
               {groupedNotifications.older.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-semibold mb-4">{t('notifications.older')}</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-gray-100">{t('notifications.older')}</h2>
                   <div className="space-y-4">
                     {groupedNotifications.older.map(notif => (
                       <Card
                         key={notif.id}
-                        className={`cursor-pointer ${!notif.lu ? 'bg-blue-50' : ''}`}
+                        className={`cursor-pointer ${!notif.lu ? 'bg-gold-500/10 border-gold-500/30' : ''}`}
                         onClick={() => handleMarkAsRead(notif.id)}
                       >
                         <div className="flex items-start justify-between">
@@ -257,8 +257,8 @@ const CandidatNotifications = () => {
                               className="mt-1"
                             />
                             <div className="flex-1">
-                              <p className="font-medium">{notif.message}</p>
-                              <p className="text-sm text-gray-500 mt-1">
+                              <p className="font-medium text-gray-100">{notif.message}</p>
+                              <p className="text-sm text-gray-400 mt-1">
                                 {new Date(notif.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'numeric', year: 'numeric' })}
                               </p>
                             </div>

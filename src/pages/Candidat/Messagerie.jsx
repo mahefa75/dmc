@@ -169,18 +169,18 @@ const CandidatMessagerie = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="candidat" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">{t('messagerie.title')}</h1>
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">{t('messagerie.title')}</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Dossiers */}
             <div className="lg:col-span-1">
               <Card>
-                <h2 className="font-semibold mb-4">Dossiers</h2>
+                <h2 className="font-semibold mb-4 text-gray-100">Dossiers</h2>
                 <div className="space-y-2">
                   {folders.map(folder => {
                     const Icon = folder.icon
@@ -193,8 +193,8 @@ const CandidatMessagerie = () => {
                         }}
                         className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors ${
                           selectedFolder === folder.id
-                            ? 'bg-blue-100 text-blue-700'
-                            : 'hover:bg-gray-100'
+                            ? 'bg-gold-500/20 text-gold-500'
+                            : 'text-gray-300 hover:bg-navy-600'
                         }`}
                       >
                         <div className="flex items-center gap-2">
@@ -227,7 +227,7 @@ const CandidatMessagerie = () => {
                 </div>
                 <div className="space-y-2 max-h-96 overflow-y-auto">
                   {mesMessages.length === 0 ? (
-                    <p className="text-center text-gray-500 py-8 text-sm">
+                    <p className="text-center text-gray-400 py-8 text-sm">
                       {selectedFolder === 'inbox' && 'Aucun message reçu'}
                       {selectedFolder === 'sent' && 'Aucun message envoyé'}
                       {selectedFolder === 'drafts' && 'Aucun brouillon'}
@@ -246,10 +246,10 @@ const CandidatMessagerie = () => {
                         }}
                         className={`p-3 rounded cursor-pointer transition-colors ${
                           selectedMessage?.id === msg.id
-                            ? 'bg-blue-100 border-l-4 border-blue-600'
+                            ? 'bg-gold-500/20 border-l-4 border-gold-500'
                             : !msg.lu && msg.destinataireId === user?.id
-                            ? 'bg-blue-50 hover:bg-blue-100'
-                            : 'hover:bg-gray-100'
+                            ? 'bg-gold-500/10 hover:bg-gold-500/20'
+                            : 'hover:bg-navy-600'
                         }`}
                       >
                         <div className="flex items-start justify-between mb-1">
@@ -282,8 +282,8 @@ const CandidatMessagerie = () => {
                 <Card>
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <h2 className="text-xl font-semibold mb-2">{selectedMessage.sujet}</h2>
-                      <div className="text-sm text-gray-600 space-y-1">
+                  <h2 className="text-xl font-semibold mb-2 text-gray-100">{selectedMessage.sujet}</h2>
+                  <div className="text-sm text-gray-400 space-y-1">
                         <p>
                           <span className="font-medium">De:</span> {selectedMessage.expediteurNom}
                         </p>
@@ -336,7 +336,7 @@ const CandidatMessagerie = () => {
                   </div>
 
                   {selectedMessage.pieceJointe && (
-                    <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                    <div className="mb-4 p-3 bg-navy-800 rounded-lg border border-navy-600">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Paperclip className="w-5 h-5 text-gray-400" />
@@ -356,7 +356,7 @@ const CandidatMessagerie = () => {
                   )}
 
                   <div className="prose max-w-none">
-                    <p className="text-gray-700 whitespace-pre-line">{selectedMessage.contenu}</p>
+                    <p className="text-gray-300 whitespace-pre-line">{selectedMessage.contenu}</p>
                   </div>
 
                   {selectedFolder !== 'trash' && selectedMessage.expediteurId !== user?.id && (
@@ -381,7 +381,7 @@ const CandidatMessagerie = () => {
                 </Card>
               ) : (
                 <Card>
-                  <h2 className="font-semibold mb-4">
+                  <h2 className="font-semibold mb-4 text-gray-100">
                     {selectedFolder === 'drafts' ? 'Nouveau brouillon' : 'Nouveau message'}
                   </h2>
                   <div className="space-y-4">
@@ -392,14 +392,14 @@ const CandidatMessagerie = () => {
                       placeholder="Sujet du message"
                     />
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
                         {t('messagerie.content')}
                       </label>
                       <textarea
                         value={newMessage.contenu}
                         onChange={(e) => setNewMessage({ ...newMessage, contenu: e.target.value })}
                         rows={10}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 bg-navy-800 border border-navy-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
                         placeholder="Votre message..."
                       />
                     </div>
@@ -428,7 +428,7 @@ const CandidatMessagerie = () => {
                       )}
                     </div>
                     <div className="flex gap-2">
-                      <Button onClick={handleSend} variant="primary">
+                      <Button onClick={handleSend} variant="gold">
                         <Send className="w-4 h-4 mr-2 inline" />
                         {t('messagerie.send')}
                       </Button>

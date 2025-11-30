@@ -33,15 +33,15 @@ const AdminOffres = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="admin" />
         <main className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold">{t('admin.offres')}</h1>
+            <h1 className="text-3xl font-display font-bold text-gray-100">{t('admin.offres')}</h1>
             <Link to="/admin/offres/nouvelle">
-              <Button variant="primary">Nouvelle offre</Button>
+              <Button variant="gold">Nouvelle offre</Button>
             </Link>
           </div>
 
@@ -55,9 +55,3 @@ const AdminOffres = () => {
 }
 
 export default AdminOffres
-
-
-
-
-
-

@@ -129,24 +129,24 @@ const EntrepriseNouvelleDemande = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="entreprise" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">{t('entreprise.nouvelleDemande')}</h1>
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">{t('entreprise.nouvelleDemande')}</h1>
 
           <Card>
             <div className="mb-6">
               <div className="flex items-center justify-between">
                 {[1, 2, 3, 4, 5].map(s => (
                   <div key={s} className="flex items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      step >= s ? 'bg-blue-600 text-white' : 'bg-gray-200'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
+                      step >= s ? 'bg-gold-500 text-navy-900' : 'bg-navy-700 text-gray-400'
                     }`}>
                       {s}
                     </div>
-                    {s < 5 && <div className={`w-16 h-1 ${step > s ? 'bg-blue-600' : 'bg-gray-200'}`} />}
+                    {s < 5 && <div className={`w-16 h-1 ${step > s ? 'bg-gold-500' : 'bg-navy-700'}`} />}
                   </div>
                 ))}
               </div>
@@ -155,7 +155,7 @@ const EntrepriseNouvelleDemande = () => {
             {/* Étape 1 : Informations poste */}
             {step === 1 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold mb-4">Informations sur le poste</h2>
+                <h2 className="text-xl font-semibold mb-4 text-gray-100">Informations sur le poste</h2>
                 <Input
                   label="Intitulé du poste"
                   value={formData.posteRecherche}
@@ -203,7 +203,7 @@ const EntrepriseNouvelleDemande = () => {
                   onChange={(e) => setFormData({ ...formData, dateDebut: e.target.value })}
                 />
                 <div className="flex gap-4">
-                  <Button onClick={handleNext} variant="primary">Suivant</Button>
+                  <Button onClick={handleNext} variant="gold">Suivant</Button>
                 </div>
               </div>
             )}
@@ -211,7 +211,7 @@ const EntrepriseNouvelleDemande = () => {
             {/* Étape 2 : Profil recherché */}
             {step === 2 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold mb-4">Profil recherché</h2>
+                <h2 className="text-xl font-semibold mb-4 text-gray-100">Profil recherché</h2>
                 <Select
                   label="Niveau d'études"
                   value={formData.niveauEtudes}
@@ -294,7 +294,7 @@ const EntrepriseNouvelleDemande = () => {
                 />
                 <div className="flex gap-4">
                   <Button onClick={handlePrevious} variant="secondary">Précédent</Button>
-                  <Button onClick={handleNext} variant="primary">Suivant</Button>
+                  <Button onClick={handleNext} variant="gold">Suivant</Button>
                 </div>
               </div>
             )}
@@ -302,7 +302,7 @@ const EntrepriseNouvelleDemande = () => {
             {/* Étape 3 : Description détaillée */}
             {step === 3 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold mb-4">Description détaillée</h2>
+                <h2 className="text-xl font-semibold mb-4 text-gray-100">Description détaillée</h2>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Description du poste *</label>
                   <textarea
@@ -365,7 +365,7 @@ const EntrepriseNouvelleDemande = () => {
                 </div>
                 <div className="flex gap-4">
                   <Button onClick={handlePrevious} variant="secondary">Précédent</Button>
-                  <Button onClick={handleNext} variant="primary">Suivant</Button>
+                  <Button onClick={handleNext} variant="gold">Suivant</Button>
                 </div>
               </div>
             )}
@@ -373,7 +373,7 @@ const EntrepriseNouvelleDemande = () => {
             {/* Étape 4 : Documents et urgence */}
             {step === 4 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold mb-4">Documents et urgence</h2>
+                <h2 className="text-xl font-semibold mb-4 text-gray-100">Documents et urgence</h2>
                 <FileUpload
                   label="Fiche de poste (PDF, Word)"
                   accept=".pdf,.doc,.docx"
@@ -405,7 +405,7 @@ const EntrepriseNouvelleDemande = () => {
                 />
                 <div className="flex gap-4">
                   <Button onClick={handlePrevious} variant="secondary">Précédent</Button>
-                  <Button onClick={handleNext} variant="primary">Suivant</Button>
+                  <Button onClick={handleNext} variant="gold">Suivant</Button>
                 </div>
               </div>
             )}
@@ -413,8 +413,8 @@ const EntrepriseNouvelleDemande = () => {
             {/* Étape 5 : Validation */}
             {step === 5 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold mb-4">Récapitulatif et validation</h2>
-                <div className="bg-gray-50 p-6 rounded-lg space-y-4">
+                <h2 className="text-xl font-semibold mb-4 text-gray-100">Récapitulatif et validation</h2>
+                <div className="bg-navy-800 p-6 rounded-lg space-y-4 border border-navy-600">
                   <div>
                     <h3 className="font-semibold mb-2">Informations sur le poste</h3>
                     <div className="space-y-1 text-sm">
@@ -469,7 +469,7 @@ const EntrepriseNouvelleDemande = () => {
                 </div>
                 <div className="flex gap-4">
                   <Button onClick={handlePrevious} variant="secondary">Précédent</Button>
-                  <Button onClick={handleSubmit} variant="primary">Envoyer la demande</Button>
+                  <Button onClick={handleSubmit} variant="gold">Envoyer la demande</Button>
                 </div>
               </div>
             )}

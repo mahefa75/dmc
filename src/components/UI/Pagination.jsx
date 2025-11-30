@@ -49,17 +49,17 @@ const Pagination = ({
 
   return (
     <div className={`flex items-center justify-between ${className}`}>
-      <div className="text-sm text-gray-700">
-        Affichage de <span className="font-medium">{startItem}</span> à{' '}
-        <span className="font-medium">{endItem}</span> sur{' '}
-        <span className="font-medium">{totalItems}</span> résultats
+      <div className="text-sm text-gray-400">
+        Affichage de <span className="font-medium text-gray-200">{startItem}</span> à{' '}
+        <span className="font-medium text-gray-200">{endItem}</span> sur{' '}
+        <span className="font-medium text-gray-200">{totalItems}</span> résultats
       </div>
 
       <div className="flex items-center gap-2">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 rounded-lg border border-navy-600 bg-navy-700 text-gray-300 hover:bg-navy-600 hover:border-gold-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -72,8 +72,8 @@ const Pagination = ({
               px-4 py-2 rounded-lg border transition-colors
               ${
                 page === currentPage
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'border-gray-300 hover:bg-gray-50'
+                  ? 'bg-gold-500 text-navy-900 border-gold-500 font-semibold'
+                  : 'border-navy-600 bg-navy-700 text-gray-300 hover:bg-navy-600 hover:border-gold-500/50'
               }
             `}
           >
@@ -84,7 +84,7 @@ const Pagination = ({
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 rounded-lg border border-navy-600 bg-navy-700 text-gray-300 hover:bg-navy-600 hover:border-gold-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
@@ -94,9 +94,3 @@ const Pagination = ({
 }
 
 export default Pagination
-
-
-
-
-
-

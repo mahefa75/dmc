@@ -22,7 +22,6 @@ const Contact = () => {
     e.preventDefault()
     setLoading(true)
 
-    // Simulation d'envoi
     console.log('Envoi message contact:', formData, file)
     
     setTimeout(() => {
@@ -48,13 +47,13 @@ const Contact = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
-      <main className="flex-1 py-12 bg-gray-50">
+      <main className="flex-1 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">{t('nav.contact')}</h1>
-            <p className="text-gray-600">
+            <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">{t('nav.contact')}</h1>
+            <p className="text-gray-400">
               Contactez-nous pour toute question ou demande d'information
             </p>
           </div>
@@ -62,28 +61,28 @@ const Contact = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Informations de contact */}
             <Card>
-              <h2 className="text-2xl font-semibold mb-6">Informations de contact</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-gold-500">Informations de contact</h2>
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-semibold mb-2">Adresse</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-semibold mb-2 text-gray-100">Adresse</h3>
+                  <p className="text-gray-400">
                     Antananarivo, Madagascar
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">Email</h3>
-                  <p className="text-gray-600">contact@recrutement-mg-mu.com</p>
+                  <h3 className="font-semibold mb-2 text-gray-100">Email</h3>
+                  <p className="text-gray-400">contact@recrutement-mg-mu.com</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">Téléphone</h3>
-                  <p className="text-gray-600">+261 34 00 000 00</p>
+                  <h3 className="font-semibold mb-2 text-gray-100">Téléphone</h3>
+                  <p className="text-gray-400">+261 34 00 000 00</p>
                 </div>
               </div>
             </Card>
 
             {/* Formulaire */}
             <Card>
-              <h2 className="text-2xl font-semibold mb-6">Envoyer un message</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-gold-500">Envoyer un message</h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Input
@@ -119,25 +118,25 @@ const Contact = () => {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Objet
                   </label>
                   <select
                     name="objet"
                     value={formData.objet}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 border border-navy-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
                     required
                   >
-                    <option value="">Sélectionner un objet</option>
-                    <option value="candidat">Question candidat</option>
-                    <option value="entreprise">Question entreprise</option>
-                    <option value="autre">Autre</option>
+                    <option value="" className="bg-navy-800">Sélectionner un objet</option>
+                    <option value="candidat" className="bg-navy-800">Question candidat</option>
+                    <option value="entreprise" className="bg-navy-800">Question entreprise</option>
+                    <option value="autre" className="bg-navy-800">Autre</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Message
                   </label>
                   <textarea
@@ -145,7 +144,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-navy-800 border border-navy-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
                     required
                   />
                 </div>
@@ -164,14 +163,14 @@ const Contact = () => {
                     required
                     className="mr-2"
                   />
-                  <label htmlFor="rgpd" className="text-sm text-gray-600">
+                  <label htmlFor="rgpd" className="text-sm text-gray-400">
                     J'accepte que mes données soient traitées
                   </label>
                 </div>
 
                 <Button
                   type="submit"
-                  variant="primary"
+                  variant="gold"
                   className="w-full"
                   disabled={loading}
                 >
@@ -189,9 +188,3 @@ const Contact = () => {
 }
 
 export default Contact
-
-
-
-
-
-

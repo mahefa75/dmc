@@ -37,12 +37,12 @@ const EntrepriseMesDemandes = () => {
   }
 
   const columns = [
-    { id: 'demande_envoyee', label: 'Demande envoyée', color: 'bg-blue-100' },
-    { id: 'preselection', label: 'Présélection', color: 'bg-yellow-100' },
-    { id: 'entretien_planifie', label: 'Entretien planifié', color: 'bg-purple-100' },
-    { id: 'validation', label: 'Validation', color: 'bg-green-100' },
-    { id: 'documents', label: 'Documents', color: 'bg-orange-100' },
-    { id: 'finalise', label: 'Finalisé', color: 'bg-gray-100' }
+    { id: 'demande_envoyee', label: 'Demande envoyée', color: 'bg-navy-700' },
+    { id: 'preselection', label: 'Présélection', color: 'bg-amber-900/30' },
+    { id: 'entretien_planifie', label: 'Entretien planifié', color: 'bg-purple-900/30' },
+    { id: 'validation', label: 'Validation', color: 'bg-emerald-900/30' },
+    { id: 'documents', label: 'Documents', color: 'bg-orange-900/30' },
+    { id: 'finalise', label: 'Finalisé', color: 'bg-navy-600' }
   ]
 
   const getDemandesByColumn = (columnId) => {
@@ -88,14 +88,14 @@ const EntrepriseMesDemandes = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="entreprise" />
         <main className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold">{t('entreprise.mesDemandes')}</h1>
-            <Button variant="primary" onClick={() => window.location.href = '/entreprise/nouvelle-demande'}>
+            <h1 className="text-3xl font-display font-bold text-gray-100">{t('entreprise.mesDemandes')}</h1>
+            <Button variant="gold" onClick={() => window.location.href = '/entreprise/nouvelle-demande'}>
               Nouvelle demande
             </Button>
           </div>
@@ -111,14 +111,14 @@ const EntrepriseMesDemandes = () => {
                     onDrop={(e) => handleDrop(e, column.id)}
                   >
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-semibold text-gray-800">{column.label}</h3>
+                      <h3 className="font-semibold text-gray-100">{column.label}</h3>
                       <Badge variant="info">{demandes.length}</Badge>
                     </div>
                     <div className="space-y-3 min-h-[200px]">
                       {demandes.map(demande => (
                         <Card
                           key={demande.id}
-                          className="cursor-move bg-white shadow-md hover:shadow-lg transition-shadow"
+                          className="cursor-move bg-navy-800 border border-navy-600 shadow-md hover:shadow-lg transition-shadow"
                           draggable
                           onDragStart={(e) => handleDragStart(e, demande)}
                           onClick={() => setSelectedDemande(selectedDemande?.id === demande.id ? null : demande)}
@@ -126,8 +126,8 @@ const EntrepriseMesDemandes = () => {
                           <div className="p-3">
                             <div className="flex items-start justify-between mb-2">
                               <div className="flex-1">
-                                <h4 className="font-semibold text-sm mb-1">{demande.posteRecherche || 'Poste non spécifié'}</h4>
-                                <p className="text-xs text-gray-600 mb-1">{demande.secteur || 'Secteur non spécifié'}</p>
+                                <h4 className="font-semibold text-sm mb-1 text-gray-100">{demande.posteRecherche || 'Poste non spécifié'}</h4>
+                                <p className="text-xs text-gray-400 mb-1">{demande.secteur || 'Secteur non spécifié'}</p>
                                 <p className="text-xs text-gray-500">
                                   {new Date(demande.dateCreation).toLocaleDateString('fr-FR', {
                                     day: 'numeric',

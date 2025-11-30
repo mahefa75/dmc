@@ -144,23 +144,23 @@ const CandidatProfil = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="candidat" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">{t('profil.title')}</h1>
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">{t('profil.title')}</h1>
 
           {/* Tabs */}
-          <div className="flex gap-2 mb-6 border-b">
+          <div className="flex gap-2 mb-6 border-b border-navy-700">
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 font-medium ${
+                className={`px-4 py-2 font-medium transition-colors ${
                   activeTab === tab.id
-                    ? 'border-b-2 border-blue-600 text-blue-600'
-                    : 'text-gray-600 hover:text-gray-800'
+                    ? 'border-b-2 border-gold-500 text-gold-500'
+                    : 'text-gray-400 hover:text-gray-200'
                 }`}
               >
                 {tab.label}
@@ -299,7 +299,7 @@ const CandidatProfil = () => {
                 {formData.experiences.map((exp, index) => (
                   <Card key={index} className="p-4">
                     <div className="flex justify-between mb-4">
-                      <h3 className="font-semibold">Expérience {index + 1}</h3>
+                      <h3 className="font-semibold text-gray-100">Expérience {index + 1}</h3>
                       <button
                         onClick={() => removeExperience(index)}
                         className="text-red-600 hover:text-red-800"
@@ -331,14 +331,14 @@ const CandidatProfil = () => {
                         onChange={(e) => updateExperience(index, 'dateFin', e.target.value)}
                       />
                       <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-300 mb-1">
                           Description
                         </label>
                         <textarea
                           value={exp.description}
                           onChange={(e) => updateExperience(index, 'description', e.target.value)}
                           rows={3}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                          className="w-full px-4 py-2 bg-navy-800 border border-navy-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500/50"
                         />
                       </div>
                     </div>
@@ -357,7 +357,7 @@ const CandidatProfil = () => {
                 {formData.diplomes.map((diplome, index) => (
                   <Card key={index} className="p-4">
                     <div className="flex justify-between mb-4">
-                      <h3 className="font-semibold">Diplôme {index + 1}</h3>
+                      <h3 className="font-semibold text-gray-100">Diplôme {index + 1}</h3>
                       <button
                         onClick={() => removeDiplome(index)}
                         className="text-red-600 hover:text-red-800"
@@ -402,7 +402,7 @@ const CandidatProfil = () => {
             {activeTab === 'competences' && (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Langues parlées
                   </label>
                   {formData.langues.map((langue, index) => (
@@ -432,7 +432,7 @@ const CandidatProfil = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Permis de conduire
                   </label>
                   <div className="flex gap-2">
@@ -474,7 +474,7 @@ const CandidatProfil = () => {
                   options={['', 'Immédiate', 'Sous 1 mois', 'Sous 3 mois', 'À discuter']}
                 />
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Type de contrat recherché
                   </label>
                   <div className="flex gap-4">
@@ -507,7 +507,7 @@ const CandidatProfil = () => {
             )}
 
             <div className="mt-6 flex justify-end">
-              <Button onClick={handleSave} variant="primary">
+              <Button onClick={handleSave} variant="gold">
                 {t('common.save')}
               </Button>
             </div>
@@ -520,6 +520,7 @@ const CandidatProfil = () => {
 }
 
 export default CandidatProfil
+
 
 
 

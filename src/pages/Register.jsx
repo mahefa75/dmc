@@ -5,6 +5,7 @@ import { Input, Button, Card } from '../components/UI'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useToast } from '../components/UI/Toast'
+import { Diamond } from 'lucide-react'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -148,33 +149,49 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
-      <main className="flex-1 flex items-center justify-center p-4 bg-gray-50">
-        <div className="w-full max-w-md">
-          <Card>
-            <h1 className="text-3xl font-bold text-center mb-6">{t('auth.register')}</h1>
+      <main className="flex-1 flex items-center justify-center p-4 py-12">
+        {/* Background decorations */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="w-full max-w-md relative z-10">
+          <Card variant="glass" className="p-8">
+            <div className="flex justify-center mb-6">
+              <Diamond className="w-12 h-12 text-gold-500" />
+            </div>
+            <h1 className="text-3xl font-display font-bold text-center mb-2 text-gray-100">
+              {t('auth.register')}
+            </h1>
+            <p className="text-gray-400 text-center mb-8">
+              Rejoignez notre communauté de professionnels
+            </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                label={t('auth.lastName')}
-                name="nom"
-                value={formData.nom}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                error={errors.nom}
-              />
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  label={t('auth.lastName')}
+                  name="nom"
+                  value={formData.nom}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  error={errors.nom}
+                />
 
-              <Input
-                label={t('auth.firstName')}
-                name="prenom"
-                value={formData.prenom}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                error={errors.prenom}
-              />
+                <Input
+                  label={t('auth.firstName')}
+                  name="prenom"
+                  value={formData.prenom}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  error={errors.prenom}
+                />
+              </div>
 
               <Input
                 label={t('auth.email')}
@@ -222,18 +239,18 @@ const Register = () => {
 
               <Button
                 type="submit"
-                variant="primary"
-                className="w-full"
+                variant="gold"
+                className="w-full mt-6"
                 disabled={loading}
               >
                 {loading ? t('common.loading') : t('auth.registerButton')}
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-400">
                 {t('auth.hasAccount')}{' '}
-                <Link to="/login" className="text-blue-600 hover:underline">
+                <Link to="/login" className="text-gold-500 hover:text-gold-400 transition-colors">
                   {t('auth.login')}
                 </Link>
               </p>
@@ -248,6 +265,3 @@ const Register = () => {
 }
 
 export default Register
-
-
-

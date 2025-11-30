@@ -68,7 +68,7 @@ const Sidebar = ({ role }) => {
       {/* Bouton menu burger sur mobile */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="lg:hidden fixed top-20 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200 hover:bg-gray-50"
+        className="lg:hidden fixed top-20 left-4 z-50 p-2 bg-navy-800 rounded-lg shadow-lg border border-navy-600 hover:bg-navy-700 text-gray-300"
         aria-label="Toggle menu"
       >
         {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -77,20 +77,20 @@ const Sidebar = ({ role }) => {
       {/* Overlay sur mobile */}
       {isMobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+          className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-30"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside className={`
-        w-64 bg-gray-50 min-h-screen border-r border-gray-200
+        w-64 bg-navy-800 min-h-screen border-r border-navy-700
         fixed lg:static top-0 left-0 z-40
         transform transition-transform duration-300 ease-in-out
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <nav className="p-4 pt-20 lg:pt-4">
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             {menu.map((item) => {
               const Icon = item.icon
               const isActive = location.pathname === item.path
@@ -100,15 +100,15 @@ const Sidebar = ({ role }) => {
                   <Link
                     to={item.path}
                     className={`
-                      flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
+                      flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
                       ${
                         isActive
-                          ? 'bg-blue-600 text-white'
-                          : 'text-gray-700 hover:bg-gray-200'
+                          ? 'bg-gold-500/10 text-gold-500 border-l-4 border-gold-500'
+                          : 'text-gray-400 hover:bg-navy-700 hover:text-gray-200'
                       }
                     `}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className={`w-5 h-5 ${isActive ? 'text-gold-500' : ''}`} />
                     <span className="font-medium">{item.label}</span>
                   </Link>
                 </li>
@@ -122,9 +122,3 @@ const Sidebar = ({ role }) => {
 }
 
 export default Sidebar
-
-
-
-
-
-

@@ -98,11 +98,11 @@ const OffresPublic = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <main className="flex-1 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold mb-8">{t('offres.title')}</h1>
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">{t('offres.title')}</h1>
 
           {/* Recherche et filtres */}
           <div className="mb-8 space-y-4">
@@ -162,11 +162,11 @@ const OffresPublic = () => {
 
           {/* Résultats et tri */}
           <div className="mb-4 flex items-center justify-between flex-wrap gap-4">
-            <p className="text-gray-600">
+            <p className="text-gray-400">
               {filteredOffres.length} offre{filteredOffres.length > 1 ? 's' : ''} trouvée{filteredOffres.length > 1 ? 's' : ''}
             </p>
             <div className="flex items-center gap-2">
-              <ArrowUpDown className="w-4 h-4 text-gray-500" />
+              <ArrowUpDown className="w-4 h-4 text-gray-400" />
               <Select
                 value={sortBy}
                 onChange={(e) => {
@@ -186,7 +186,7 @@ const OffresPublic = () => {
           {/* Liste des offres */}
           {paginatedOffres.length === 0 ? (
             <Card>
-              <p className="text-center text-gray-500 py-8">
+              <p className="text-center text-gray-400 py-8">
                 Aucune offre ne correspond à vos critères
               </p>
             </Card>
@@ -206,7 +206,7 @@ const OffresPublic = () => {
                 return (
                   <Card key={offre.id} hover>
                     <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold flex-1">
+                      <h3 className="text-xl font-semibold flex-1 text-gray-100">
                         <Highlight text={offre.titre} searchTerm={searchTerm} />
                       </h3>
                       <div className="flex gap-2 ml-2">
@@ -220,24 +220,24 @@ const OffresPublic = () => {
                     </div>
                     
                     {offre.entrepriseNom && (
-                      <div className="flex items-center text-gray-600 text-sm mb-2">
-                        <Building2 className="w-4 h-4 mr-2" />
+                      <div className="flex items-center text-gray-400 text-sm mb-2">
+                        <Building2 className="w-4 h-4 mr-2 text-gold-500" />
                         {offre.entrepriseNom}
                       </div>
                     )}
 
                     <div className="space-y-2 mb-4">
-                      <div className="flex items-center text-gray-600 text-sm">
-                        <Briefcase className="w-4 h-4 mr-2" />
+                      <div className="flex items-center text-gray-400 text-sm">
+                        <Briefcase className="w-4 h-4 mr-2 text-gold-500" />
                         {offre.secteur}
                       </div>
-                      <div className="flex items-center text-gray-600 text-sm">
-                        <MapPin className="w-4 h-4 mr-2" />
+                      <div className="flex items-center text-gray-400 text-sm">
+                        <MapPin className="w-4 h-4 mr-2 text-gold-500" />
                         {offre.localisation}
                       </div>
                       {offre.salaire && (
-                        <div className="flex items-center text-gray-600 text-sm">
-                          <DollarSign className="w-4 h-4 mr-2" />
+                        <div className="flex items-center text-gray-400 text-sm">
+                          <DollarSign className="w-4 h-4 mr-2 text-gold-500" />
                           {offre.salaire.toLocaleString()} MUR
                         </div>
                       )}
@@ -249,12 +249,12 @@ const OffresPublic = () => {
                       )}
                     </div>
 
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    <p className="text-gray-400 text-sm mb-4 line-clamp-2">
                       {offre.description?.substring(0, 100)}...
                     </p>
 
                     <Link to={`/offres/${offre.id}`}>
-                      <Button variant="primary" className="w-full">
+                      <Button variant="gold" className="w-full">
                         {t('offres.details')}
                       </Button>
                     </Link>

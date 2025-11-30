@@ -5,10 +5,18 @@ const Card = ({
   className = '',
   hover = false,
   onClick,
+  variant = 'default',
   ...props
 }) => {
-  const baseClasses = 'bg-white rounded-lg shadow-md p-6'
-  const hoverClasses = hover ? 'hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer' : ''
+  const variants = {
+    default: 'bg-navy-700 border border-navy-600',
+    glass: 'bg-navy-700/80 backdrop-blur-md border border-white/10',
+    gradient: 'bg-gradient-to-br from-navy-700 to-navy-800 border border-navy-600',
+    gold: 'bg-navy-700 border border-gold-500/30'
+  }
+
+  const baseClasses = `rounded-lg shadow-lg p-6 ${variants[variant]}`
+  const hoverClasses = hover ? 'hover:shadow-xl hover:scale-[1.02] hover:border-gold-500/50 transition-all duration-300 cursor-pointer' : ''
   const clickableClasses = onClick ? 'cursor-pointer' : ''
   
   const classes = `${baseClasses} ${hoverClasses} ${clickableClasses} ${className}`
@@ -25,9 +33,3 @@ const Card = ({
 }
 
 export default Card
-
-
-
-
-
-

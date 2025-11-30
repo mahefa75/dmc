@@ -22,10 +22,10 @@ const Toast = ({ message, type = 'info', duration = 5000, onClose }) => {
   }
 
   const styles = {
-    success: 'bg-green-50 border-green-200 text-green-800',
-    error: 'bg-red-50 border-red-200 text-red-800',
-    warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-    info: 'bg-blue-50 border-blue-200 text-blue-800'
+    success: 'bg-navy-700 border-emerald-500/50 text-emerald-400',
+    error: 'bg-navy-700 border-red-500/50 text-red-400',
+    warning: 'bg-navy-700 border-amber-500/50 text-amber-400',
+    info: 'bg-navy-700 border-gold-500/50 text-gold-400'
   }
 
   if (!isVisible) return null
@@ -35,21 +35,22 @@ const Toast = ({ message, type = 'info', duration = 5000, onClose }) => {
       className={`
         fixed top-4 right-4 z-50
         flex items-center gap-3
-        px-4 py-3 rounded-lg shadow-lg border
+        px-4 py-3 rounded-lg shadow-xl border
         min-w-[300px] max-w-md
         animate-slideInRight
+        backdrop-blur-sm
         ${styles[type]}
       `}
     >
       <div className="flex-shrink-0">{icons[type]}</div>
-      <div className="flex-1">{message}</div>
+      <div className="flex-1 text-gray-200">{message}</div>
       {onClose && (
         <button
           onClick={() => {
             setIsVisible(false)
             setTimeout(() => onClose?.(), 300)
           }}
-          className="flex-shrink-0 hover:opacity-70"
+          className="flex-shrink-0 hover:opacity-70 text-gray-400 hover:text-gray-200 transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
@@ -91,9 +92,3 @@ export const useToast = () => {
 }
 
 export default Toast
-
-
-
-
-
-

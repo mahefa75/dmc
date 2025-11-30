@@ -42,7 +42,6 @@ const CandidatMesCandidatures = () => {
       entretien: { variant: 'info', label: t('candidatures.entretien') },
       accepte: { variant: 'success', label: t('candidatures.accepte') },
       refuse: { variant: 'danger', label: t('candidatures.refuse') },
-      // Support pour les statuts en anglais
       pending: { variant: 'warning', label: 'En attente' },
       preselected: { variant: 'info', label: 'Présélectionné' },
       'interview scheduled': { variant: 'info', label: 'Entretien planifié' },
@@ -99,13 +98,13 @@ const CandidatMesCandidatures = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="candidat" />
         <main className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold">{t('candidatures.title')}</h1>
+            <h1 className="text-3xl font-display font-bold text-gray-100">{t('candidatures.title')}</h1>
             <Select
               value={statutFilter}
               onChange={(e) => {
@@ -126,7 +125,7 @@ const CandidatMesCandidatures = () => {
 
           <Card>
             {mesCandidatures.length === 0 ? (
-              <p className="text-center text-gray-500 py-8">Aucune candidature</p>
+              <p className="text-center text-gray-400 py-8">Aucune candidature</p>
             ) : (
               <>
                 <Table columns={columns} data={paginatedCandidatures} />
@@ -148,7 +147,6 @@ const CandidatMesCandidatures = () => {
       </div>
       <ToastContainer />
       
-      {/* Modal de confirmation de retrait */}
       <Modal
         isOpen={showRemoveModal}
         onClose={() => {
@@ -158,7 +156,7 @@ const CandidatMesCandidatures = () => {
         title="Retirer la candidature"
         footer={
           <>
-            <Button variant="outline" onClick={() => {
+            <Button variant="secondary" onClick={() => {
               setShowRemoveModal(false)
               setCandidatureToRemove(null)
             }}>
@@ -170,10 +168,10 @@ const CandidatMesCandidatures = () => {
           </>
         }
       >
-        <p className="mb-4">
-          Êtes-vous sûr de vouloir retirer votre candidature pour le poste <strong>{candidatureToRemove?.offre?.titre}</strong> chez <strong>{candidatureToRemove?.offre?.entrepriseNom}</strong> ?
+        <p className="mb-4 text-gray-300">
+          Êtes-vous sûr de vouloir retirer votre candidature pour le poste <strong className="text-gold-500">{candidatureToRemove?.offre?.titre}</strong> chez <strong className="text-gold-500">{candidatureToRemove?.offre?.entrepriseNom}</strong> ?
         </p>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-400">
           Cette action est irréversible.
         </p>
       </Modal>
@@ -182,6 +180,3 @@ const CandidatMesCandidatures = () => {
 }
 
 export default CandidatMesCandidatures
-
-
-

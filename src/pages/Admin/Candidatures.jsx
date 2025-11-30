@@ -31,12 +31,12 @@ const AdminCandidatures = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <div className="flex flex-1">
         <Sidebar role="admin" />
         <main className="flex-1 p-8">
-          <h1 className="text-3xl font-bold mb-8">{t('admin.candidatures')}</h1>
+          <h1 className="text-3xl font-display font-bold mb-8 text-gray-100">{t('admin.candidatures')}</h1>
 
           <Card>
             <Table columns={columns} data={candidaturesWithDetails} />
@@ -48,9 +48,3 @@ const AdminCandidatures = () => {
 }
 
 export default AdminCandidatures
-
-
-
-
-
-
