@@ -5,7 +5,7 @@ import { Input, Button, Card } from '../components/UI'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useToast } from '../components/UI/Toast'
-import { Diamond } from 'lucide-react'
+import { Diamond, User, Building2, Shield } from 'lucide-react'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -111,6 +111,68 @@ const Login = () => {
                   {t('auth.register')}
                 </Link>
               </p>
+            </div>
+          </Card>
+
+          {/* Demo Credentials */}
+          <Card variant="glass" className="mt-6 p-6">
+            <h3 className="text-sm font-semibold text-gray-300 mb-4 text-center uppercase tracking-wider">
+              {t('auth.demoCredentials')}
+            </h3>
+            <div className="space-y-3">
+              {/* Admin */}
+              <button
+                type="button"
+                onClick={() => { setEmail('admin@recrutement.mg'); setPassword('admin123'); }}
+                className="w-full flex items-center gap-3 p-3 bg-navy-700/50 hover:bg-navy-700 rounded-lg transition-colors group"
+              >
+                <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-red-400" />
+                </div>
+                <div className="text-left flex-1">
+                  <p className="text-sm font-medium text-gray-200">Admin</p>
+                  <p className="text-xs text-gray-500">admin@recrutement.mg / admin123</p>
+                </div>
+                <span className="text-xs text-gold-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {t('auth.clickToFill')}
+                </span>
+              </button>
+
+              {/* Entreprise */}
+              <button
+                type="button"
+                onClick={() => { setEmail('contact@techmu.mu'); setPassword('entreprise123'); }}
+                className="w-full flex items-center gap-3 p-3 bg-navy-700/50 hover:bg-navy-700 rounded-lg transition-colors group"
+              >
+                <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
+                  <Building2 className="w-5 h-5 text-blue-400" />
+                </div>
+                <div className="text-left flex-1">
+                  <p className="text-sm font-medium text-gray-200">{t('nav.entreprise')}</p>
+                  <p className="text-xs text-gray-500">contact@techmu.mu / entreprise123</p>
+                </div>
+                <span className="text-xs text-gold-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {t('auth.clickToFill')}
+                </span>
+              </button>
+
+              {/* Candidat */}
+              <button
+                type="button"
+                onClick={() => { setEmail('jean.rakoto@email.mg'); setPassword('candidat123'); }}
+                className="w-full flex items-center gap-3 p-3 bg-navy-700/50 hover:bg-navy-700 rounded-lg transition-colors group"
+              >
+                <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <User className="w-5 h-5 text-green-400" />
+                </div>
+                <div className="text-left flex-1">
+                  <p className="text-sm font-medium text-gray-200">{t('nav.candidat')}</p>
+                  <p className="text-xs text-gray-500">jean.rakoto@email.mg / candidat123</p>
+                </div>
+                <span className="text-xs text-gold-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {t('auth.clickToFill')}
+                </span>
+              </button>
             </div>
           </Card>
         </div>

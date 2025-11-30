@@ -27,8 +27,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 text-gray-100">{t('footer.navigation')}</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
-                <Link to="/" className="hover:text-gold-500 transition-colors">
-                  {t('home.quiSommes')}
+                <Link to="/about" className="hover:text-gold-500 transition-colors">
+                  {t('about.title')}
                 </Link>
               </li>
               <li>
@@ -66,9 +66,9 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 text-gray-100">{t('footer.support')}</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
-                <a href="#" className="hover:text-gold-500 transition-colors">
+                <Link to="/faq" className="hover:text-gold-500 transition-colors">
                   {t('footer.faq')}
-                </a>
+                </Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-gold-500 transition-colors">
@@ -76,9 +76,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-gold-500 transition-colors">
+                <Link to="/privacy" className="hover:text-gold-500 transition-colors">
                   {t('footer.privacyPolicy')}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

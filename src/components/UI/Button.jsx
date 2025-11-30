@@ -10,7 +10,7 @@ const Button = ({
   className = '',
   ...props
 }) => {
-  const baseClasses = 'font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-navy-900'
+  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-navy-900'
   
   const variants = {
     primary: 'bg-gold-500 hover:bg-gold-400 text-navy-900 focus:ring-gold-500',

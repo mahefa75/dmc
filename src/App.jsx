@@ -9,6 +9,9 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
 import Contact from './pages/Contact'
+import About from './pages/About'
+import FAQ from './pages/FAQ'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import OffresPublic from './pages/OffresPublic'
 import OffreDetail from './pages/OffreDetail'
 import CandidatPublic from './pages/CandidatPublic'
@@ -62,6 +65,9 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/offres" element={<OffresPublic />} />
               <Route path="/offres/:id" element={<OffreDetail />} />
               <Route path="/candidat" element={<CandidatPublic />} />

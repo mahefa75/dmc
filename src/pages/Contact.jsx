@@ -50,7 +50,7 @@ const Contact = () => {
     <div className="min-h-screen flex flex-col bg-navy-900">
       <Header />
       <main className="flex-1 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-display font-bold mb-4 text-gray-100">{t('nav.contact')}</h1>
             <p className="text-gray-400">
@@ -60,9 +60,9 @@ const Contact = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Informations de contact */}
-            <Card>
+            <Card className="flex flex-col h-full">
               <h2 className="text-2xl font-semibold mb-6 text-gold-500">{t('contact.contactInfo')}</h2>
-              <div className="space-y-4">
+              <div className="space-y-4 mb-6">
                 <div>
                   <h3 className="font-semibold mb-2 text-gray-100">{t('contact.address')}</h3>
                   <p className="text-gray-400">
@@ -77,6 +77,19 @@ const Contact = () => {
                   <h3 className="font-semibold mb-2 text-gray-100">{t('auth.phone')}</h3>
                   <p className="text-gray-400">+261 34 00 000 00</p>
                 </div>
+              </div>
+              {/* Carte OpenStreetMap */}
+              <div className="flex-grow min-h-[300px] rounded-lg overflow-hidden border border-navy-600">
+                <iframe
+                  title="Localisation Antananarivo"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=47.4800%2C-18.9300%2C47.5500%2C-18.8700&layer=mapnik&marker=-18.8792%2C47.5079"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, minHeight: '300px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
             </Card>
 

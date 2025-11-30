@@ -10,6 +10,38 @@ import FirebaseService from '../utils/firebaseService'
 
 const AuthContext = createContext(null)
 
+// Utilisateurs de démonstration
+const DEMO_USERS = {
+  'admin@recrutement.mg': {
+    id: 'demo-admin-001',
+    email: 'admin@recrutement.mg',
+    password: 'admin123',
+    nom: 'Administrateur',
+    prenom: 'Système',
+    role: 'admin',
+    createdAt: '2024-01-01T00:00:00.000Z'
+  },
+  'contact@techmu.mu': {
+    id: 'demo-entreprise-001',
+    email: 'contact@techmu.mu',
+    password: 'entreprise123',
+    nom: 'TechMU Ltd',
+    prenom: 'Contact',
+    role: 'entreprise',
+    entreprise: 'TechMU Ltd',
+    createdAt: '2024-01-15T00:00:00.000Z'
+  },
+  'jean.rakoto@email.mg': {
+    id: 'demo-candidat-001',
+    email: 'jean.rakoto@email.mg',
+    password: 'candidat123',
+    nom: 'Rakoto',
+    prenom: 'Jean',
+    role: 'candidat',
+    createdAt: '2024-02-01T00:00:00.000Z'
+  }
+}
+
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
@@ -23,6 +55,19 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Vérifier d'abord si un utilisateur démo est en session
+    const demoUserJson = localStorage.getItem('demoUser')
+    if (demoUserJson) {
+      try {
+        const demoUser = JSON.parse(demoUserJson)
+        setUser(demoUser)
+        setLoading(false)
+        return
+      } catch (e) {
+        localStorage.removeItem('demoUser')
+      }
+    }
+
     // Écouter les changements d'état d'authentification Firebase
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
@@ -51,6 +96,18 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const login = async (email, password) => {
+    // Vérifier d'abord si c'est un utilisateur de démonstration
+    const demoUser = DEMO_USERS[email]
+    if (demoUser && demoUser.password === password) {
+      const { password: _, ...userWithoutPassword } = demoUser
+      const fullUser = { ...userWithoutPassword, uid: demoUser.id, isDemo: true }
+      setUser(fullUser)
+      // Sauvegarder dans localStorage pour persister la session démo
+      localStorage.setItem('demoUser', JSON.stringify(fullUser))
+      return { success: true, user: fullUser }
+    }
+
+    // Si ce n'est pas un utilisateur démo, essayer Firebase
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       const firebaseUser = userCredential.user
@@ -78,6 +135,12 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Erreur lors de la connexion:', error)
       let errorMessage = 'Une erreur est survenue'
+      
+      // Vérifier si c'est un email de démo avec mauvais mot de passe
+      if (DEMO_USERS[email]) {
+        errorMessage = 'Mot de passe incorrect'
+        return { success: false, error: errorMessage }
+      }
       
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
         errorMessage = 'Email ou mot de passe incorrect'
@@ -142,10 +205,20 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await signOut(auth)
+      // Supprimer la session démo si elle existe
+      localStorage.removeItem('demoUser')
+      
+      // Déconnecter de Firebase si connecté
+      if (auth.currentUser) {
+        await signOut(auth)
+      }
+      
       setUser(null)
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error)
+      // Forcer la déconnexion même en cas d'erreur
+      localStorage.removeItem('demoUser')
+      setUser(null)
     }
   }
 
