@@ -48,6 +48,7 @@ import AdminContrats from './pages/Admin/Contrats'
 import AdminFacturation from './pages/Admin/Facturation'
 import AdminStatistiques from './pages/Admin/Statistiques'
 import AdminUtilisateurs from './pages/Admin/Utilisateurs'
+import AdminNotifications from './pages/Admin/Notifications'
 
 import ProtectedRoute from './components/Layout/ProtectedRoute'
 import NotFound from './pages/NotFound'
@@ -307,6 +308,14 @@ function App() {
                 element={
                   <ProtectedRoute role="admin">
                     <AdminUtilisateurs />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/notifications"
+                element={
+                  <ProtectedRoute role="admin">
+                    <AdminNotifications />
                   </ProtectedRoute>
                 }
               />

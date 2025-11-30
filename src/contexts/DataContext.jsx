@@ -35,12 +35,25 @@ const convertTimestamps = (data) => {
   return data
 }
 
+// Charger les notifications depuis localStorage au démarrage (limité à 100 pour les performances)
+const getInitialNotifications = () => {
+  try {
+    const localNotifs = JSON.parse(localStorage.getItem('notifications') || '[]')
+    // Limiter à 100 pour les performances, trier par date
+    return localNotifs
+      .sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt))
+      .slice(0, 100)
+  } catch (e) {
+    return []
+  }
+}
+
 export const DataProvider = ({ children }) => {
   const [users, setUsers] = useState([])
   const [offres, setOffres] = useState([])
   const [candidatures, setCandidatures] = useState([])
   const [messages, setMessages] = useState([])
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState(getInitialNotifications())
   const [demandesEntreprises, setDemandesEntreprises] = useState([])
   const [contrats, setContrats] = useState([])
   const [loading, setLoading] = useState(true)
@@ -71,7 +84,20 @@ export const DataProvider = ({ children }) => {
     })
 
     const unsubscribeNotifications = FirebaseService.subscribeNotifications((data) => {
-      setNotifications(convertTimestamps(data))
+      // Si Firebase retourne des données, les utiliser
+      if (data && data.length > 0) {
+        setNotifications(convertTimestamps(data))
+      } else {
+        // Sinon, utiliser localStorage comme fallback
+        try {
+          const localNotifs = JSON.parse(localStorage.getItem('notifications') || '[]')
+          if (localNotifs.length > 0) {
+            setNotifications(localNotifs)
+          }
+        } catch (e) {
+          console.error('Erreur lors du chargement des notifications localStorage:', e)
+        }
+      }
     })
 
     const unsubscribeDemandes = FirebaseService.subscribeDemandesEntreprises((data) => {
