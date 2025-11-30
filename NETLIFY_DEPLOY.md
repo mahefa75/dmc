@@ -132,7 +132,7 @@ Vous pouvez configurer des valeurs différentes pour chaque environnement si né
 ## 🔍 Vérification après déploiement
 
 1. **Vérifier que le site est accessible**
-   - Netlify vous donnera une URL du type `https://votre-site.netlify.app`
+   - Netlify vous donnera une URL du type `https://statuesque-moonbeam-133bcf.netlify.app/`
    - Ouvrez cette URL dans votre navigateur
 
 2. **Vérifier la console du navigateur**
